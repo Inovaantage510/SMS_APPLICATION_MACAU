@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Event</title>
+
+  <link rel="stylesheet" href="Base1.css">
+  <link rel="stylesheet" href="Addon1.css">
+  <link rel="stylesheet" href="SmsStyle.css">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
+  <script src="RevisedShowPreview.js"></script>
+
+  <style>
+  	
+		#previewModal {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 8px hsla(0, 0%, 0%, 0.021); /* Soft shadow */
+  border-radius: 12px; /* Rounded corners */
+  z-index: 1000;
+  width: 80%; /* Adjust the width as needed */
+  max-width: 600px; /* Set a maximum width */
+}
+
+#previewModal p {
+  margin: 0 0 10px; /* Add some spacing between paragraphs */
+}
+
+#previewModal strong {
+  color: #007bff; /* Blue color for strong tags */
+}
+
+#previewModal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #007bff; /* Blue color for close button */
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+#previewModal .close-btn:hover {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+
+    .hidden {
+      display: none;
+    }
+
+    .error {
+      color: red;
+    }
+    .form-group-phase{
+      margin: left;
+
+    }
+    .rowPhase{
+      margin-left: 813px;
+    }
+    .rowPreview{
+      margin-left: 513px;
+    }
+     #send{
+      margin-left: 50px;
+      float: right;
+      padding-left: 100px;
+    }
+	select{
+	color:black;
+	}
+	option{
+		color:black;
+	}
+
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a class="navbar-brand brand-logo" style="margin: auto; padding: 20px; text-align: justify; color: blue;">
+      <h1>CEM</h1>
+    </a>
+  </nav>
+  <div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Event</h4>
+                <form class="form-sample" id="eventForm">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-3">
+                      <div class="form-group">
+                        <div class="form-group has-danger">
+                          <label for="eventNumberInput" id="eventlang-Event_Number">Event Number</label>
+                          <input class="form-control form-control-danger" id="eventNumberInput" placeholder="Event Number" required="" aria-invalid="true">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                      <div class="form-group">
+                        <label for="smsTypeSelect" id="eventlang-sms-type">SMS Type :</label>
+                        <select class="form-control" id="smsTypeSelect" onchange="toggleFields()">
+                          <option value="">--select--</option>
+                          <option value="outage"    id="event_out" selected>Outage</option>
+                          <option value="emergency" id="event_emg">Emergency</option>
+                          <option value="generator" id="event_gen">Generator</option> 
+                          <option value="freetext"  id="event_free_text">Free Text</option> 
+                          <textarea id="inptext" rows="10" cols="50" style="margin-top:50px;" maxlength="512"></textarea>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3" id="SmsCauseField">
+                      <div class="form-group">
+                        <br>
+                        <select class="form-control" id="SmsCauseSelect">
+                          <option value="">--select</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                      <div class="form-group">
+                        <label for="languageSelect" id="eventlang-language">Language:</label>
+                        <select class="form-control" id="ls" onchange="changeLang()">
+                          <option value="english" onclick="myenglish()">English</option>
+                          <option value="chinese" onclick="mychinese()" selected>中国人</option>
+              
+                        </select>
+                      </div>
+                    </div>
+                  </div>  
+                  <div class="row">
+                    <div class="col-sm-12 col-md-4 hidden" id="causeField">
+                      <div class="form-group" id="caus">
+                        <label for="causeSelect" id="event_cause">Cause:</label>
+                        <select class="form-control" id="causeSelect">
+                          <option value="">--select</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="customerField">
+                      <div class="form-group">
+                        <label for="customerInput" id="event_customer">Customer:</label>
+                        <input type="number" class="form-control" id="customerInput" placeholder="Customer" value="1">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="buildingField">
+                      <div class="form-group">
+                        <label for="buildingInput" id="event_building">Building:</label>
+                        <input type="number" class="form-control" id="buildingInput" placeholder="Building" value="1">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="offDateTimeField">
+                      <div class="form-group">
+                        <label for="offDateTimeInput" id="event_off_date_time">Off Date Time:</label>
+                        <input type="text" class="form-control" id="offDateTimeInput" placeholder="Off Date Time">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
+                      <div class="form-group">
+                        <label for="restoreDateTimeInput" id="event_restore_date_time">Restore Date Time:</label>
+                        <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="Restore Date Time">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 hidden" id="phaseField">
+                      <div class="form-group">
+                        <label for="phaseSelect" id="event_phase">Phase:</label>
+                        <select class="form-control" id="phaseSelect">
+                          <option value="">--select</option>
+                          <option value="A" id="phase_a">A</option>
+                          <option value="B" id="phase_b">B</option>
+                          <option value="C" id="phase_c">C</option>
+                          <option value="AB" id="phase_ab">AB</option>
+                          <option value="AC" id="phase_ac">AC</option>
+                          <option value="BC" id="phase_bc">BC</option>
+                          <option value="ABC" id="phase_abc">ABC</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 hidden" id="repairing">
+                      <div class="form-group">
+                        <br>
+                        <label for="repairing" id="event_repairing">Repairing</label>
+                        <input type="checkbox" name="" id=""><br> <br> 
+                    </div>
+                    </div>
+                  <!-- </div> -->
+                  <div class="rowPhase hidden" id ="PhaseButtons">
+                      <div class="form-group-phase">
+                        <button type="button" class="btn btn-primary">1/3</button>
+                        <button type="button" class="btn btn-primary">2/3</button>
+                        <button type="button" class="btn btn-primary">Reset Cust</button>
+                      </div>
+                  </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="repairObservationField">
+                      <div class="form-group">
+                        <label for="repairObservationInput">Observation:</label>
+                        <input type="text" class="form-control" id="repairObservationInput" placeholder="Repairing Observation">
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="observationField">
+                      <div class="form-group">
+                        <label for="observationInput">Observation:</label>
+                        <!-- <input type="text" class="form-control" id="observationInput" placeholder="Observation"> -->
+                        <select class="form-control" id="observationInput">
+                          <option value="">--select</option>
+                          <option value="Yes">Burnt Smell</option>
+                          <option value="Yes">Fell Down</option>
+                          <option value="Yes">Noise</option>
+                          <option value="Yes">On Fire</option>
+                          <option value="Yes">Open</option>
+                          <option value="Yes">Peculiar Smell</option>
+                          <option value="Yes">Pull Off</option>
+                          <option value="Yes">Smoking</option>
+                          <option value="Yes">Spark</option>
+                          <!-- <option value="Yes">5</option>
+                          <option value="No">63</option>
+                          <option value="No">84</option> -->
+                          <!-- <option value="No">ST1</option> -->
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="cemNetworkAffectedField">
+                      <div class="form-group">
+                        <label for="affectedNetworkInput">CEM Network Affected:</label>
+                        <!-- <input type="text" class="form-control" id="affectedNetworkInput" placeholder="CEM Network Affected"> -->
+                        <select class="form-control" id="affectedNetworkInput">
+                          <option value="">--select</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option></select>
+                      </div>
+                    </div>
+                     <div class="col-sm-12 col-md-4 hidden" id="generatorField">
+                      <div class="form-group">
+                        <label for="generatorInput">Generator:</label>
+                        <!-- <input type="text" class="form-control" id="generatorInput" placeholder="Generator"> -->
+                        <select class="form-control" id="generatorInput">
+                          <option value="" selected disabled>--select</option>
+                          <option value="Yes">G03</option>
+                          <option value="Yes">G04</option>
+                          <option value="Yes">G05</option>
+                          <option value="Yes">G06</option>
+                          <option value="Yes">G07</option>
+                          <option value="Yes">G08</option>
+                          <option value="Yes">G1+G2+ST1</option>
+                          <option value="Yes">GT1</option>
+                          <option value="Yes">GT1+GT2</option>
+                          <option value="Yes">GT1+ST1</option>
+                          <option value="No">GT2</option>
+                          <option value="No">GT2+ST1</option>
+                          <option value="No">ST1</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 hidden" id="powerLostField">
+                      <div class="form-group">
+                        <label for="powerLostInput">Power Lost:</label>
+                        <!-- <input type="text" class="form-control" id="powerLostInput" placeholder="Power Lost"> -->
+                        <select class="form-control" id="powerLostInput">
+                          <option value="" selected disabled>--select</option>
+                          <option value="0" id="y">0</option>
+                          <option value="10" id="y">10</option>
+                          <option value="12" id="y">12</option>
+                          <option value="126" id="y">126</option>
+                          <option value="18" id="y">18</option>
+                          <option value="28" id="y">28</option>
+                          <option value="32" id="y">32</option>
+                          <option value="40" id="y">40</option>
+                          <option value="42" id="y">42</option>
+                          <option value="5" id="y">5</option>
+                          <option value="63"  id="y">63</option>
+                          <option value="84"  id="y">84</option>
+                          <!-- <option value="No">ST1</option> -->
+                        </select><div id="mwadd"></div>
+                      </div>
+                    </div>
+                  <!-- </div> -->
+                    <div class="col-sm-12 col-md-4 hidden" id="dateTimeField">
+                      <div class="form-group">
+                        <label for="dateTimeInput">Date and Time:</label>
+                        <input type="datetime-local" class="form-control" id="dateTimeInput" placeholder="Date and Time" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="Remarks hidden" id ="Remarks">
+                    <label for="RemarkInput">Remarks:</label>
+                    <textarea id="RemarkInput" class="form-control" maxlength="255"></textarea>
+                </div>
+                  <div class="Address hidden" id ="Address">
+                    <label id="event_address">Address:</label>
+                    <textarea id="addressInput" class="form-control"></textarea>
+                </div>
+                <div class="PtList hidden" id ="PtList">
+                  <label id="event_pt_list">PT List:</label>
+                  <input type="text" class="form-control" id="ptlist">
+              </div><br>
+                  <div class="rowPreview">
+                      <div class="form-group">
+                        <button type="button" class="btn btn-primary" onclick="showPreview()">Preview</button>
+                        <button type="button" class="btn btn-primary" onclick="resetForm()">Reset</button>                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group pull-right">
+                        <button type="submit" class="btn btn-primary mr-2">Save</button>
+                        <button type="submit" class="btn btn-primary mr-2">History</button>
+                      </div>  
+                    <div class="row">
+                      <label for="exampleInputName1" id="eventlang-destination">Destination:</label>
+                      <br></div>
+                    <div class="row"> 
+                    <div class="col-sm-12 col-md-6">
+                    <div class="form-group" id="smsrecpbox">
+                    <label id="eventlang_sms_recp_box">SMS Recipient Box:</label>
+                    <input type="text" class="form-control" placeholder="SMS Recipient Box" aria-label="Destination" aria-describedby="basic-addon2" id="smsRecipientBox">
+                    </div>
+                    </div> 
+
+                      <div class="col-sm-12 col-md-6">
+                      <div class="form-group" id="">
+                      <label id="">Recipient Group:</label>
+                      <select id="recepgroupselected"> 
+                       <option value="" selected disabled>----Select---</option>
+                       <option value="Group 1">Group 1</option>
+                       <option value="Group 2">Group 2</option>
+                       <option value="Group 3">Group 3</option>
+                      </select>
+                      </div>
+                      </div> 
+
+                     
+                    <div class="col-sm-12 col-md-6" id="phonenum">
+                      <div class="form-group">
+                        <label for="phoneNumberInput" id="eventlang-phone_number">Phone Number</label>
+                        <input type="tel" id="phoneNumberInput" class="form-control" placeholder="Phone Number" >   
+                        <div id="output" style="margin-top:20px;"></div>                   
+                      </div>
+                      </div> 
+                    <!-- <div class="col-sm-12">
+                      <div class="form-group pull-right">
+                        <button type="submit" class="btn btn-primary mr-2">Save</button>
+                        <button type="submit" class="btn btn-primary mr-2">History</button>
+                      </div> -->
+                  </div>
+                  <div class="col-sm-12" id="send">
+                    <div class="form-group" id="send">
+                      <button type="submit" class="btn btn-primary mr-2" id="sendButton" disabled>Send</button> 
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Preview Modal -->
+  <div id="previewModal" class="modal" style="overflow-y:scroll">
+    <div class="modal-content">
+      <h2>SMS Preview</h2>
+      <div id="previewContent"></div>
+      <button  id="okButton" onclick="downloadFile()">OK</button>
+      <button  onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
+  <script>
+		
+		function fetchJobID() {
+			const urlParams = new URLSearchParams(window.location.search);
+			const jobId = urlParams.get('jobID'); 
+			if (!jobId) {
+			console.error('No job ID found in the URL.');
+			return;
+			}
+			
+			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			apiUrl = apiUrl.concat('/',jobId);
+			const username = "admin";
+			const password = "admin";
+			const base64Credentials = btoa(username + ':' + password);
+			return fetch(apiUrl,{headers: 
+			{'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + base64Credentials
+			}
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Failed to fetch data: ' + response.statusText);
+				}
+				return response.json();
+			})
+			.then(data => {
+				var jobId = data.displayID;
+				document.getElementById('eventNumberInput').value = jobId;
+				return jobId;
+			
+			})
+			.catch(error => console.error('Error fetching previous data:', error));
+		}
+		
+		function fetchObjectId(jobId) {
+			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			apiUrl=apiUrl.concat('/', jobId);
+			var username = "admin";
+			var password = "admin";
+			var base64Credentials = btoa(username + ':' + password);
+			return fetch(apiUrl,{headers: {
+			'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + base64Credentials
+			}
+			})
+				.then(response => {
+					if (!response.ok) {
+					throw new Error('Failed to fetch object ID');
+					}
+				return response.json();
+				})
+				.then(data => {
+				console.log(data);
+                var objectId = data.id;
+				return objectId;
+				})
+				.catch(error => {
+				console.error('Error fetching object ID:', error);
+				return null;
+				});
+		}
+		
+		function padToTwoDigits(number){
+			return number.toString().padStart(2, '0');
+		}
+		
+		function formatDateTime(dateString){
+			var date = new Date(dateString);
+			var year = date.getFullYear();
+			var month = padToTwoDigits(date.getMonth() + 1);
+			var day = padToTwoDigits(date.getDate());
+			var hours = padToTwoDigits(date.getHours());
+			var minutes = padToTwoDigits(date.getMinutes());
+			var seconds = padToTwoDigits(date.getSeconds());
+			return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+		}
+		
+		function fetchOutageStepOffTime(jobId) {
+			
+			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			apiUrl = apiUrl.concat('/',jobId);
+			const username = "admin";
+			const password = "admin";
+			const base64Credentials = btoa(username + ':' + password);
+			return fetch(apiUrl,{headers: 
+			{'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + base64Credentials
+			}
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Failed to fetch data: ' + response.statusText);
+				}
+				return response.json();
+			})
+			.then(data => {
+				var offTime = data.outageStepOffTime;
+				var formattedOffTime = formatDateTime(offTime);
+				document.getElementById('offDateTimeInput').value = formattedOffTime;
+				return formattedOffTime;
+			
+			})
+			.catch(error => console.error('Error fetching previous data:', error));
+		}
+		
+		function fetchtotalAffectedCustomers(jobId) {
+			
+			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			apiUrl = apiUrl.concat('/',jobId);
+			const username = "admin";
+			const password = "admin";
+			const base64Credentials = btoa(username + ':' + password);
+			return fetch(apiUrl,{headers: 
+			{'Content-Type': 'application/json',
+			'Authorization': 'Basic ' + base64Credentials
+			}
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Failed to fetch data: ' + response.statusText);
+				}
+				return response.json();
+			})
+			.then(data => {
+				var customer = data.totalAffected;
+				document.getElementById('customerInput').value = customer;
+				return customer;
+			
+			})
+			.catch(error => console.error('Error fetching previous data:', error));
+		}
+  
+      function resetForm() {
+      document.getElementById("eventForm").reset();
+      document.getElementById("customerInput").value = 1;
+    }
+
+    function changeLanguage() {
+      var language = document.getElementById("languageSelect").value;
+      var elements = document.querySelectorAll("[data-translate]");
+
+      elements.forEach(function(element) {
+        var key = element.getAttribute("data-translate");
+        element.innerText = translations[language][key];
+      });
+    }
+
+    var translations = {
+      english: {
+        eventNumber: "Event Number",
+        smsType: "SMS Type :",
+        language: "Language:",
+      },
+      chinese: {
+        eventNumber: "事件编号",
+        smsType: "短信类型：",
+        language: "语言：",
+      }
+    };
+   
+  
+    function restrictInputToNumbers(event) {
+      const input = event.target;
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
+  
+    function toggleFields() {
+      var smsType = document.getElementById('smsTypeSelect').value;
+      var causeField = document.getElementById('causeField');
+      var causeSelect = document.getElementById('causeSelect');
+      var SmsCauseField = document.getElementById('SmsCauseField');
+      var SmsCauseSelect = document.getElementById('SmsCauseSelect');
+  
+      // Hide all fields initially
+      document.getElementById('customerField').style.display = 'none';
+      document.getElementById('buildingField').style.display = 'none';
+      document.getElementById('offDateTimeField').style.display = 'none';
+      document.getElementById('restoreDateTimeField').style.display = 'none';
+      document.getElementById('phaseField').style.display = 'none';
+      document.getElementById('PhaseButtons').style.display = 'none';
+      document.getElementById('repairing').style.display = 'none';
+      document.getElementById('repairObservationField').style.display = 'none';
+      document.getElementById('observationField').style.display = 'none';
+      document.getElementById('cemNetworkAffectedField').style.display = 'none';
+      document.getElementById('generatorField').style.display = 'none';
+      document.getElementById('powerLostField').style.display = 'none';
+      document.getElementById('dateTimeField').style.display = 'none';
+      document.getElementById('Remarks').style.display = 'none';
+      document.getElementById('Address').style.display = 'none';
+      document.getElementById('PtList').style.display = 'none'; 
+      document.getElementById('inptext').style.display = 'none';  
+
+      // Clear cause options
+      causeSelect.innerHTML = '<option value="">--select</option>';
+      SmsCauseSelect.innerHTML = '<option value="">--select</option>';
+      if (smsType === 'outage') {
+        var causes = ['Aging', 'Bad Contact', 'Burnt', 'Cancel Job', 'Damaged', 'Disconnection Non-payment', 'Fell Down', 'Fire Accident', 'Flooded', 'Fuse Blown', 'Fuse Base Burnt', 'Internal Fault', 'Loose'];
+        var causeout = ['110kV Cable', '11kV Tr', '220kV Cable', '66kV Cable', '66kV/11kV Tr', 'Aerial Cable', 'CCL', 'CD', 'Customer', 'Customer CCL', 'LV Cable', 'MV Cable', 'Meter', 'Meter Wire Box', 'PH', 'QG', 'QGBT', 'RMU CB Open', 'Customer CCL Fuse Base', 'Under Investigation', 'Urgent Planned Outage'];
+  
+        var smstypearr = [ 
+                      '110kV 电缆',  
+                      '11kV 变压器', 
+                      '220kV 电缆', 
+                      '66kV 电缆', 
+                      '66kV/11kV 变压器', 
+                      '空中电缆', 
+                      'CCL', 
+                      'CD', 
+                      '客户', 
+                      '客户 CCL', 
+                      '低压电缆', 
+                      '中压电缆', 
+                      '电表', 
+                      '电表接线盒', 
+                      'PH', 
+                      'QG', 
+                      'QGBT', 
+                      'RMU 断路器开启', 
+                      '客户 CCL 保险丝座', 
+                      '正在调查', 
+                      '紧急计划停电'  
+
+                    ]; 
+
+
+         var causestypearr = ['老化', '接触不良', '烧坏', '取消工作', '损坏', '因未付款断开连接', '跌倒', '火灾事故', '淹水', '熔断器烧断', '熔断器座烧坏', '内部故障', '松动']; 
+
+         
+         let sl = document.getElementById("ls").value; 
+
+         switch(sl)
+         {
+
+                   
+          case "chinese": 
+
+                causestypearr.forEach(function (cause) {
+                var option2 = document.createElement('option');
+                option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+                option2.text = cause;
+                causeSelect.appendChild(option2);
+
+              }); 
+
+
+                   break; 
+
+          case "english": 
+       
+               causes.forEach(function (cause) {
+               var option1 = document.createElement('option');
+               option1.value = cause.toLowerCase().replace(/\s+/g, '_');
+               option1.text = cause;
+               causeSelect.appendChild(option1); 
+                
+
+              });
+  
+                   break; 
+
+          }
+
+
+         let selectedLanguage = document.getElementById("ls").value;    
+
+       
+        switch(selectedLanguage)
+        {
+               
+              case "english": 
+
+                        causeout.forEach(function (cause) {
+                        var option1 = document.createElement('option');
+                        option1.value = cause.toLowerCase().replace(/\s+/g, '_');
+                        option1.text = cause;
+                       SmsCauseSelect.appendChild(option1);   
+              });
+                          break; 
+
+              case "chinese":  
+
+                       smstypearr.forEach(function (cause){
+              var option2 = document.createElement('option'); 
+              option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+              option2.text = cause;
+              SmsCauseSelect.appendChild(option2);  
+                  
+              });  
+                    
+                          break;  
+
+        }
+
+
+        causeField.style.display = 'block';
+        document.getElementById('customerField').style.display = 'block';
+        document.getElementById('buildingField').style.display = 'block';
+        document.getElementById('offDateTimeField').style.display = 'block';
+        document.getElementById('restoreDateTimeField').style.display = 'block';
+        document.getElementById('phaseField').style.display = 'block';
+        document.getElementById('repairing').style.display = 'block';
+        document.getElementById('PhaseButtons').style.display = 'block';
+        document.getElementById('Address').style.display = 'block';
+        document.getElementById('PtList').style.display = 'block';
+        document.getElementById('inptext').style.display = 'none' ; 
+        document.getElementById("caus").style.display = "block";  
+        document.getElementById("phonenum").style.display = "block";  
+        document.getElementById("SmsCauseField").style.display = "block"; 
+      } 
+      else if (smsType === 'emergency') {
+        var emergencyCauses = ['Aerial Cable','CCL','CD','Customer','Customer CCL','IP Pole','Meter','PT','Public Lighting','QGBT','Rising Mains','SS','Electric', 'Box']; // Add actual emergency causes here
+        var emergencyCausesEMR = ['Aging','Animal','Artificial Destruction','Bad Contact','Damaged','Fire Accident','Flooded','Loose','Short Circuit','Termite','Traffic Accident','Under Investigation']; // Add actual emergency causes here
+        
+        
+         var emergencyarr = [
+ 
+                                  '老化' , 
+
+                                  '动物' , 
+                           
+                                  '人工破坏' ,  
+
+                                  '接触不良' , 
+
+                                  '损坏的' ,  
+
+                                  '火灾事故' , 
+
+                                  '被水淹没', 
+
+                                  '松动的', 
+
+                                  '短路' ,
+
+                                  '白蚁', 
+
+                                  '交通事故' , 
+
+                                  '正在调查中'
+
+
+                            ];
+        
+
+          var  emergencyCausesarr = ['空中电缆', 'CCL', 'CD', '客户', '客户CCL', 'IP电杆', '电表', 'PT', '公共照明', 'QGBT', '上升主电缆', 'SS', '电气', '箱'];
+
+
+    
+        let selectedLanguage1 = document.getElementById("ls").value;   
+
+
+        switch(selectedLanguage1) 
+        {
+           
+             case "english": 
+
+             emergencyCausesEMR.forEach(function (cause) {
+             var option1 = document.createElement('option');
+             option1.value = cause.toLowerCase().replace(/\s+/g, '_');
+             option1.text = cause;
+             SmsCauseSelect.appendChild(option1);
+        });
+
+                       break; 
+
+             case "chinese":  
+
+             emergencyarr.forEach(function (cause) {
+             var option2 = document.createElement('option');
+             option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+             option2.text = cause;
+             SmsCauseSelect.appendChild(option2);
+
+             }); 
+
+                      break; 
+        }
+
+
+
+      let ls1 = document.getElementById("ls").value;   
+     
+
+     switch(ls1)
+     { 
+
+         case "english": 
+
+
+          emergencyCauses.forEach(function (cause) {
+          var option1 = document.createElement('option');
+          option1.value = cause.toLowerCase().replace(/\s+/g, '_');
+          option1.text = cause;
+          causeSelect.appendChild(option1);
+        });
+       
+               break; 
+      
+         case "chinese": 
+
+          emergencyCausesarr.forEach(function (cause) {
+          var option2 = document.createElement('option');
+          option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+          option2.text = cause;
+          causeSelect.appendChild(option2);
+        });
+
+               break; 
+
+     }
+         
+
+        SmsCauseField.style.display = 'block';
+        causeField.style.display = 'block';
+        document.getElementById('customerField').style.display = 'block';
+        document.getElementById('offDateTimeField').style.display = 'block';
+        document.getElementById('restoreDateTimeField').style.display = 'block';
+        document.getElementById('observationField').style.display = 'block';
+        document.getElementById('repairing').style.display = 'block';
+        document.getElementById('Address').style.display = 'block'; 
+        document.getElementById('inptext').style.display = 'none' ; 
+        document.getElementById("caus").style.display = "block"; 
+        document.getElementById("phonenum").style.display = "block";
+        document.getElementById("SmsCauseField").style.display = "block"; 
+      } 
+      else if (smsType === 'generator') {
+        var generatorCauses = ['Generator De-rate','Generator Trip Off','Generator Unavailable','Test']; 
+      
+
+        var generatortypearr = [
+
+                           '发电机降额', 
+                           '发电机跳闸' , 
+
+                           '发电机不可用' , 
+
+                           '测试'
+
+                              ]; 
+
+
+        let selectedLanguage2 = document.getElementById("ls").value;  
+         
+         switch(selectedLanguage2)
+         {
+             
+             case "english": 
+
+             generatorCauses.forEach(function (cause) {
+             var option1 = document.createElement('option');
+             option1.value = cause.toLowerCase().replace(/\s+/g, '_');
+             option1.text = cause;
+             SmsCauseSelect.appendChild(option1);
+        });
+        
+                     break; 
+
+            case "chinese": 
+
+             generatortypearr.forEach(function (cause) {
+             var option2 = document.createElement('option');
+             option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+             option2.text = cause;
+             SmsCauseSelect.appendChild(option2);
+
+             });
+              
+                   break; 
+ 
+         }
+         
+        SmsCauseField.style.display = 'block';
+        document.getElementById('cemNetworkAffectedField').style.display = 'block';
+        document.getElementById('generatorField').style.display = 'block';
+        document.getElementById('powerLostField').style.display = 'block';
+        document.getElementById('dateTimeField').style.display = 'block';
+        document.getElementById('Remarks').style.display = 'block'; 
+        document.getElementById('inptext').style.display = 'none' ;
+        document.getElementById("caus").style.display = "block";  
+        document.getElementById("phonenum").style.display = "block"; 
+        document.getElementById("SmsCauseField").style.display = "block"; 
+
+      }
+
+      else if(smsType === 'freetext')  
+      {
+    
+    
+        let sl1 = document.getElementById("ls").value; 
+    const allFields = [
+        "smsrecpbox" , "eventlang-destination" , "phonenum" , 
+        "caus" , "SmsCauseField"
+    ];
+    
+    allFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) field.style.display = 'none';
+    });
+
+    switch(sl1) {
+        case "english": 
+            document.getElementById('inptext').style.display = 'block'; 
+            break;
+        case "chinese":
+            document.getElementById('inptext').style.display = 'block';
+            break; 
+
+    } 
+       }
+    }
+    
+    function showPreview() {
+  
+        var eventNumber = document.getElementById('eventNumberInput').value;
+        var smsType = document.getElementById('smsTypeSelect').value;
+        var cause = document.getElementById('causeSelect').value;
+        var Smscause = document.getElementById('SmsCauseSelect').value;
+        var customer = document.getElementById('customerInput').value;
+        var building = document.getElementById('buildingInput').value;
+        var offDateTime = document.getElementById('offDateTimeInput').value;
+        var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
+        var phase = document.getElementById('phaseSelect').value;
+        var repairingObservation = document.getElementById('repairObservationInput').value;
+        var observation = document.getElementById('observationInput').value;
+        var affectedNetwork = document.getElementById('affectedNetworkInput').value;
+        var generator = document.getElementById('generatorInput').value;
+        var powerLost = document.getElementById('powerLostInput').value;
+        var dateTime = document.getElementById('dateTimeInput').value;
+        var Address = document.getElementById('addressInput').value;
+        var Remarks = document.getElementById('RemarkInput').value; 
+        var freetext =  document.getElementById('inptext').value;  
+        
+        var previewContent = '</p>';
+  
+        if (smsType === 'outage') {
+          
+
+          previewContent += '<p>Event Number: ' + eventNumber + '</p>'; 
+          previewContent += '<p>smsType: ' + smsType + '</p>';
+          previewContent += '<p>Cause: ' + Smscause + '</p>';
+          previewContent += '<p>Reason: ' + cause + '</p>';
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';
+          previewContent += '<p>Building: ' + building + '</p>';
+          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
+          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
+          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
+          previewContent += '<p>Observation: ' + observation + '</p>';
+          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
+          previewContent += '<p>Generator: ' + generator + '</p>';
+          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
+          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
+          previewContent += '<p>Phase: ' + phase + '</p>';
+          previewContent += '<p>Remarks: ' + Remarks + '</p>';
+          previewContent += '<p>Free Text: ' + freetext + '</p>'; 
+
+
+          }
+
+
+         else if (smsType === 'emergency') {
+          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
+          previewContent += '<p>smsType: ' + smsType + '</p>';
+          previewContent += '<p>Cause: ' + Smscause + '</p>';
+          previewContent += '<p>Reason: ' + cause + '</p>';
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';
+          previewContent += '<p>Building: ' + building + '</p>';
+          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
+          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
+          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
+          previewContent += '<p>Observation: ' + observation + '</p>';
+          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
+          previewContent += '<p>Generator: ' + generator + '</p>';
+          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
+          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
+          previewContent += '<p>Phase: ' + phase + '</p>';
+          previewContent += '<p>Remarks: ' + Remarks + '</p>';
+          previewContent += '<p>Free Text: ' + freetext + '</p>';
+        } else if (smsType === 'generator') {
+          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
+          previewContent += '<p>smsType: ' + smsType + '</p>';
+          previewContent += '<p>Cause: ' + Smscause + '</p>';
+          previewContent += '<p>Reason: ' + cause + '</p>';
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';
+          previewContent += '<p>Building: ' + building + '</p>';
+          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
+          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
+          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
+          previewContent += '<p>Observation: ' + observation + '</p>';
+          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
+          previewContent += '<p>Generator: ' + generator + '</p>';
+          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
+          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
+          previewContent += '<p>Phase: ' + phase + '</p>';
+          previewContent += '<p>Remarks: ' + Remarks + '</p>';
+          previewContent += '<p>Free Text: ' + freetext + '</p>';
+        } 
+        else if(smsType === 'freetext')
+        {
+                
+          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
+          previewContent += '<p>smsType: ' + smsType + '</p>';
+          previewContent += '<p>Cause: ' + Smscause + '</p>';
+          previewContent += '<p>Reason: ' + cause + '</p>';
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';
+          previewContent += '<p>Building: ' + building + '</p>';
+          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
+          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
+          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
+          previewContent += '<p>Observation: ' + observation + '</p>';
+          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
+          previewContent += '<p>Generator: ' + generator + '</p>';
+          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
+          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
+          previewContent += '<p>Phase: ' + phase + '</p>';
+          previewContent += '<p>Remarks: ' + Remarks + '</p>';
+          previewContent += '<p>Free Text: ' + freetext + '</p>';
+
+        }
+  
+        document.getElementById('previewContent').innerHTML = previewContent;
+        document.getElementById('previewModal').style.display = 'block'; 
+    }
+  
+    function closeModal() {
+      document.getElementById('previewModal').style.display = 'none';
+    }
+
+    function downloadFile() {
+      var previewContent = document.getElementById('previewContent').innerText;
+      var blob = new Blob([previewContent], { type: 'text/plain' });
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'preview.txt';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      closeModal();
+    }
+	
+    function resetForm() {
+      document.getElementById("eventForm").reset();
+      // Resetting fields manually to their default values if needed
+      document.getElementById("customerInput").value = 1;
+    }
+	
+	document.addEventListener("DOMContentLoaded", function(){
+		fetchJobID()
+		.then(jobId => fetchObjectId(jobId))
+		.catch(error =>{
+			console.error('Error: ', error.message);
+		});
+		
+		fetchJobID()
+		.then(jobId => fetchOutageStepOffTime(jobId))
+		.catch(error =>{
+			console.error('Error: ', error.message);
+		});
+		
+		fetchJobID()
+		.then(jobId => fetchtotalAffectedCustomers(jobId))
+		.catch(error =>{
+			console.error('Error: ', error.message);
+		});
+		
+		var selects = document.querySelectorAll('select');
+		
+		selects.forEach(select => {
+			select.addEventListener('change', function(){
+				this.style.color = 'black';
+			});
+			
+			select.addEventListener('blur', function(){
+				if(this.value){
+					this.style.color = 'black';
+				}
+			});
+		});
+	});
+	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////    Window page load by default language change //////////////////////////////////////////
+
+const Pageloadbydefault = () => { 
+
+window.onload = function() {
+    changeLang();
+};
+
+}
+Pageloadbydefault(); 
+
+
+////////////////////////////////////////////////////////////////////////// 
+
+  function myenglish()
+  {
+          
+                   document.getElementById("event_out").textContent = 'Outage' ;   
+                   document.getElementById("event_emg").textContent = 'Emergency' ;  
+                   document.getElementById("event_gen").textContent = 'Generator' ;  
+                   document.getElementById("event_free_text").textContent = 'Free Text' ;    
+
+
+                   document.getElementById("phase_a").textContent = 'A';  
+                   document.getElementById("phase_b").textContent = 'B';  
+                   document.getElementById("phase_c").textContent = 'C'; 
+                   document.getElementById("phase_ab").textContent = 'AB';  
+                   document.getElementById("phase_ac").textContent = 'AC';  
+                   document.getElementById("phase_bc").textContent = 'BC';  
+                   document.getElementById("phase_abc").textContent = 'ABC';    
+
+
+  }
+
+  function mychinese()
+  {
+
+    document.getElementById("event_out").textContent = '停电' ;   
+    document.getElementById("event_emg").textContent = '紧急情况' ;  
+    document.getElementById("event_gen").textContent = '发电机' ;  
+    document.getElementById("event_free_text").textContent = '自由文本' ;   
+
+
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////  Address field And PT list //////////////////////////////////////////////////// 
+
+
+  const letterMap = {
+            "a": "阿", "b": "比", "c": "丙", "d": "丁", "e": "鹅",
+            "f": "飞", "g": "个", "h": "哈", "i": "一", "j": "杰",
+            "k": "可", "l": "乐", "m": "马", "n": "年", "o": "哦",
+            "p": "朋", "q": "钱", "r": "人", "s": "三", "t": "天",
+            "u": "优", "v": "维", "w": "五", "x": "星", "y": "月",
+            "z": "子" 
+        };
+ 
+ const numberMap = { 
+        
+            "0":"〇", "1":"一" , "2":"二" , "3":"三" , "4":"四" , "5":"五" , "6":"六" , "7":"七" , 
+            "8":"八" , "9":"九" , "10":"十"
+
+ }; 
+
+
+
+ let isChinese = false;   
+
+   function changeLang() 
+   {
+           
+        let selectedLanguage = document.getElementById("ls").value;  
+        
+        if (selectedLanguage === "english")  
+        {
+               myenglish();
+               toggleFields();  
+               isChinese = false;   
+
+
+        } else if (selectedLanguage === "chinese") 
+        {
+               mychinese(); 
+               toggleFields(); 
+               isChinese = true;  
+
+        }
+            
+    } 
+    
+const inputElements = [ 
+                           "addressInput",  
+                           "ptlist" , 
+                           "RemarkInput" , 
+                           "inptext" 
+
+                      ];
+
+inputElements.forEach(id => {
+    document.getElementById(id).addEventListener("input", function() {
+        let text = this.value;
+
+        if (isChinese) {
+            let convertedText = "";
+            for (let char of text.toLowerCase()) {
+                if (letterMap[char]) {
+                    convertedText += letterMap[char];  
+                } 
+                 else if(numberMap[char])
+                 {
+                     convertedText += numberMap[char];
+                 }
+                else {
+                      convertedText += char;  
+                }
+            }
+
+            this.value = convertedText;
+        } 
+
+    });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// power lost //////////////////////////////////////////////////////////////////////
+
+
+function PowerLost() {
+
+    var powerLostInput = document.getElementById("powerLostInput");
+    var mwLabel = document.getElementById("mwadd");
+    powerLostInput.addEventListener("change", function() {
+      try {
+        var selectedValue = powerLostInput.value; 
+        if (selectedValue) { 
+          mwLabel.textContent = selectedValue + " MW"; 
+          mwLabel.style.marginTop = "-26px"; 
+          mwLabel.style.marginLeft = "14.5px";   
+          mwLabel.style.fontSize = "13px";  
+        } 
+      } catch (error) {
+           console.log(error); 
+      }
+    });
+  }
+PowerLost();
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////Free text /////////////////////////////////////////////////////////
+
+let smsinput = document.getElementById("inptext");
+let sendbtn = document.getElementById("sendButton");  
+
+smsinput.addEventListener("input", function () { 
+
+        if(smsinput.value.trim() === "")
+        {
+             sendbtn.disabled = true; 
+        }
+        else 
+        {
+             sendbtn.disabled = false;  
+        } 
+
+}); 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////  Manual entry of recipients Phone Number: /////////////////////////// 
+
+
+//const smsRecipientBox = document.getElementById("smsRecipientBox");
+const phoneNumberInput = document.getElementById("phoneNumberInput"); 
+const recepgroup = document.getElementById("recepgroupselected");
+
+// smsRecipientBox.addEventListener("input" , function () { 
+
+//            if(smsRecipientBox.value.trim() !== '')
+//            {
+//                phoneNumberInput.disabled = true ; 
+//            }    
+     
+//            else 
+//            {
+//                 phoneNumberInput.disabled = false ; 
+//            } 
+
+
+// }); 
+
+// phoneNumberInput.addEventListener("input" , function () { 
+
+//       const v = phoneNumberInput.value; 
+
+//       if(v.includes(';'))
+//       {
+//             const ph = v.split(';').map(num => num.trim()); 
+//             console.log("phone number"," ",ph); 
+//       }
+
+// });
+
+const outputDiv = document.getElementById("output");
+
+phoneNumberInput.addEventListener("input", function () {
+  const phvalue = phoneNumberInput.value.trim();
+  
+  const phoneNumbers = phvalue.split(/\s+/).map(num => num.trim());
+
+  const validPhoneNumbers = phoneNumbers.filter(num => /^\d{10}$/.test(num));
+
+  if (validPhoneNumbers.length > 0) {
+  
+    outputDiv.textContent = validPhoneNumbers.join(' ; '); 
+    console.log(outputDiv.json());
+  
+  } else {
+   
+     outputDiv.textContent = "Error: Please enter valid 10-digit phone numbers.";
+  }
+});
+
+
+recepgroup.addEventListener("input", function () { 
+
+           
+      if(recepgroup)
+      {
+        phoneNumberInput.disabled = true;  
+        outputDiv.style.display = "none" ; 
+
+      }
+      else 
+      {
+        phoneNumberInput.disabled = false; 
+        outputDiv.style.display = "block"; 
+
+
+      }
+
+}); 
+
+</script>
+</body>
+</html>
