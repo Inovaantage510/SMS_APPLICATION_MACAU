@@ -153,13 +153,13 @@
                     <div class="col-sm-12 col-md-4 hidden" id="customerField">
                       <div class="form-group">
                         <label for="customerInput" id="event_customer">Customer:</label>
-                        <input type="number" class="form-control" id="customerInput" placeholder="Customer" value="1">
+                        <input type="number" class="form-control" id="customerInput" placeholder="Customer" value="0">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="buildingField">
                       <div class="form-group">
                         <label for="buildingInput" id="event_building">Building:</label>
-                        <input type="number" class="form-control" id="buildingInput" placeholder="Building" value="1">
+                        <input type="number" class="form-control" id="buildingInput" placeholder="Building" value="0">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="offDateTimeField">
@@ -329,7 +329,7 @@
 
                       <div class="col-sm-12 col-md-6">
                       <div class="form-group" id="">
-                      <label id="">Recipient Group:</label>
+                      <label id="recepgroup">Recipient Group:</label>
                       <select id="recepgroupselected"> 
                        <option value="" selected disabled>----Select---</option>
                        <option value="Group 1">Group 1</option>
@@ -870,8 +870,8 @@
     
         let sl1 = document.getElementById("ls").value; 
     const allFields = [
-        "smsrecpbox" , "eventlang-destination" , "phonenum" , 
-        "caus" , "SmsCauseField"
+        "smsrecpbox" , "eventlang-destination" , "phonenum" ,        
+        "caus" , "SmsCauseField" , "recepgroupselected" , "recepgroup"
     ];
     
     allFields.forEach(fieldId => {
@@ -891,125 +891,260 @@
        }
     }
     
-    function showPreview() {
-  
-        var eventNumber = document.getElementById('eventNumberInput').value;
-        var smsType = document.getElementById('smsTypeSelect').value;
-        var cause = document.getElementById('causeSelect').value;
-        var Smscause = document.getElementById('SmsCauseSelect').value;
-        var customer = document.getElementById('customerInput').value;
-        var building = document.getElementById('buildingInput').value;
-        var offDateTime = document.getElementById('offDateTimeInput').value;
-        var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
-        var phase = document.getElementById('phaseSelect').value;
-        var repairingObservation = document.getElementById('repairObservationInput').value;
-        var observation = document.getElementById('observationInput').value;
-        var affectedNetwork = document.getElementById('affectedNetworkInput').value;
-        var generator = document.getElementById('generatorInput').value;
-        var powerLost = document.getElementById('powerLostInput').value;
-        var dateTime = document.getElementById('dateTimeInput').value;
-        var Address = document.getElementById('addressInput').value;
-        var Remarks = document.getElementById('RemarkInput').value; 
-        var freetext =  document.getElementById('inptext').value;  
-        
-        var previewContent = '</p>';
-  
-        if (smsType === 'outage') {
-          
+    function showPreview()  {
+    var eventNumber = document.getElementById('eventNumberInput').value;
+    var smsType = document.getElementById('smsTypeSelect').value;
+    var cause = document.getElementById('causeSelect').value;
+    var Smscause = document.getElementById('SmsCauseSelect').value;
+    var customer = document.getElementById('customerInput').value;
+    var building = document.getElementById('buildingInput').value;
+    var offDateTime = document.getElementById('offDateTimeInput').value;
+    var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
+    var phase = document.getElementById('phaseSelect').value;
+    var repairingObservation = document.getElementById('repairObservationInput').value;
+    var observation = document.getElementById('observationInput').value;
+    var affectedNetwork = document.getElementById('affectedNetworkInput').value;
+    var generator = document.getElementById('generatorInput').value;
+    var powerLost = document.getElementById('powerLostInput').value;
+    var dateTime = document.getElementById('dateTimeInput').value;
+    var Address = document.getElementById('addressInput').value;
+    var Remarks = document.getElementById('RemarkInput').value;
+    var freetext =  document.getElementById('inptext').value;
 
-          previewContent += '<p>Event Number: ' + eventNumber + '</p>'; 
-          previewContent += '<p>smsType: ' + smsType + '</p>';
-          previewContent += '<p>Cause: ' + Smscause + '</p>';
-          previewContent += '<p>Reason: ' + cause + '</p>';
-          previewContent += '<p>Customer: ' + customer + '</p>';
-          previewContent += '<p>Address: ' + Address + '</p>';
-          previewContent += '<p>Building: ' + building + '</p>';
-          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
-          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
-          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
-          previewContent += '<p>Observation: ' + observation + '</p>';
-          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
-          previewContent += '<p>Generator: ' + generator + '</p>';
-          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
-          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
-          previewContent += '<p>Phase: ' + phase + '</p>';
-          previewContent += '<p>Remarks: ' + Remarks + '</p>';
-          previewContent += '<p>Free Text: ' + freetext + '</p>'; 
+    var previewContent = '</p>';
 
+    const englishcontainerobj = {
+        o: "Outage",
+        e: "Emergency",
+        g: "Generator",
+        f: "Free Text"
+    };
 
-          }
+    const chinesecontainerobj = {
+        o: "停电",
+        e: "紧急情况",
+        g: "发电机",
+        f: "自由文本"
+    };
 
+    let selectedLanguage1 = document.getElementById("ls").value;
 
-         else if (smsType === 'emergency') {
-          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
-          previewContent += '<p>smsType: ' + smsType + '</p>';
-          previewContent += '<p>Cause: ' + Smscause + '</p>';
-          previewContent += '<p>Reason: ' + cause + '</p>';
-          previewContent += '<p>Customer: ' + customer + '</p>';
-          previewContent += '<p>Address: ' + Address + '</p>';
-          previewContent += '<p>Building: ' + building + '</p>';
-          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
-          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
-          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
-          previewContent += '<p>Observation: ' + observation + '</p>';
-          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
-          previewContent += '<p>Generator: ' + generator + '</p>';
-          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
-          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
-          previewContent += '<p>Phase: ' + phase + '</p>';
-          previewContent += '<p>Remarks: ' + Remarks + '</p>';
-          previewContent += '<p>Free Text: ' + freetext + '</p>';
-        } else if (smsType === 'generator') {
-          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
-          previewContent += '<p>smsType: ' + smsType + '</p>';
-          previewContent += '<p>Cause: ' + Smscause + '</p>';
-          previewContent += '<p>Reason: ' + cause + '</p>';
-          previewContent += '<p>Customer: ' + customer + '</p>';
-          previewContent += '<p>Address: ' + Address + '</p>';
-          previewContent += '<p>Building: ' + building + '</p>';
-          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
-          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
-          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
-          previewContent += '<p>Observation: ' + observation + '</p>';
-          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
-          previewContent += '<p>Generator: ' + generator + '</p>';
-          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
-          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
-          previewContent += '<p>Phase: ' + phase + '</p>';
-          previewContent += '<p>Remarks: ' + Remarks + '</p>';
-          previewContent += '<p>Free Text: ' + freetext + '</p>';
-        } 
-        else if(smsType === 'freetext')
-        {
-                
-          previewContent += '<p>Event Number: ' + eventNumber + '</p>';
-          previewContent += '<p>smsType: ' + smsType + '</p>';
-          previewContent += '<p>Cause: ' + Smscause + '</p>';
-          previewContent += '<p>Reason: ' + cause + '</p>';
-          previewContent += '<p>Customer: ' + customer + '</p>';
-          previewContent += '<p>Address: ' + Address + '</p>';
-          previewContent += '<p>Building: ' + building + '</p>';
-          previewContent += '<p>Off Date Time: ' + offDateTime + '</p>';
-          previewContent += '<p>Restore Date Time: ' + restoreDateTime + '</p>';
-          previewContent += '<p>Repairing Observation: ' + repairingObservation + '</p>';
-          previewContent += '<p>Observation: ' + observation + '</p>';
-          previewContent += '<p>Affected Network: ' + affectedNetwork + '</p>';
-          previewContent += '<p>Generator: ' + generator + '</p>';
-          previewContent += '<p>Power Lost: ' + powerLost + '</p>';
-          previewContent += '<p>Date and Time: ' + dateTime + '</p>';
-          previewContent += '<p>Phase: ' + phase + '</p>';
-          previewContent += '<p>Remarks: ' + Remarks + '</p>';
-          previewContent += '<p>Free Text: ' + freetext + '</p>';
-
-        }
-  
-        document.getElementById('previewContent').innerHTML = previewContent;
-        document.getElementById('previewModal').style.display = 'block'; 
+    function getNullOrValue(value) {
+        return value === "" ? "null" : value;
     }
-  
+
+    if (smsType === 'outage') {
+        switch (selectedLanguage1) {
+            case "english":
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + englishcontainerobj.o + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+
+            case "chinese":
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + chinesecontainerobj.o + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+        }
+    }
+    else if (smsType === 'emergency') {
+        switch (selectedLanguage1) {
+            case "english":
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + englishcontainerobj.e + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+
+            case "chinese":
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + chinesecontainerobj.e + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+        }
+    } 
+
+    else if (smsType === 'generator')
+    {
+
+            switch(selectedLanguage1)
+            {
+
+                 case "english": 
+
+
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + englishcontainerobj.g + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+
+                       break;  
+
+                 case "chinese": 
+
+
+
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + chinesecontainerobj.g + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+
+                       break; 
+
+            }
+
+    }
+    else if(smsType === 'freetext')
+    {
+
+
+           switch(selectedLanguage1)
+            {
+
+                 case "english": 
+
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + englishcontainerobj.f + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+            
+                       break; 
+                 case "chinese": 
+
+                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                previewContent += '<p>smsType: ' + chinesecontainerobj.f + '</p>';
+                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+
+                     break; 
+
+            }
+    }
+                document.getElementById('previewContent').innerHTML = previewContent;
+                document.getElementById('previewModal').style.display = 'block'; 
+}
+
+
     function closeModal() {
       document.getElementById('previewModal').style.display = 'none';
     }
+
 
     function downloadFile() {
       var previewContent = document.getElementById('previewContent').innerText;
@@ -1022,13 +1157,15 @@
       document.body.removeChild(link);
       closeModal();
     }
-	
+
+
     function resetForm() {
       document.getElementById("eventForm").reset();
-      // Resetting fields manually to their default values if needed
       document.getElementById("customerInput").value = 1;
     }
 	
+
+
 	document.addEventListener("DOMContentLoaded", function(){
 		fetchJobID()
 		.then(jobId => fetchObjectId(jobId))
@@ -1079,6 +1216,7 @@ Pageloadbydefault();
 
 
 ////////////////////////////////////////////////////////////////////////// 
+
 
   function myenglish()
   {
@@ -1243,33 +1381,6 @@ smsinput.addEventListener("input", function () {
 //const smsRecipientBox = document.getElementById("smsRecipientBox");
 const phoneNumberInput = document.getElementById("phoneNumberInput"); 
 const recepgroup = document.getElementById("recepgroupselected");
-
-// smsRecipientBox.addEventListener("input" , function () { 
-
-//            if(smsRecipientBox.value.trim() !== '')
-//            {
-//                phoneNumberInput.disabled = true ; 
-//            }    
-     
-//            else 
-//            {
-//                 phoneNumberInput.disabled = false ; 
-//            } 
-
-
-// }); 
-
-// phoneNumberInput.addEventListener("input" , function () { 
-
-//       const v = phoneNumberInput.value; 
-
-//       if(v.includes(';'))
-//       {
-//             const ph = v.split(';').map(num => num.trim()); 
-//             console.log("phone number"," ",ph); 
-//       }
-
-// });
 
 const outputDiv = document.getElementById("output");
 
