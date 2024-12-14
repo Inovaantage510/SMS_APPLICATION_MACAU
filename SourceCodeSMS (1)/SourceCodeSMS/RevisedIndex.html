@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="Base1.css">
   <link rel="stylesheet" href="Addon1.css">
   <link rel="stylesheet" href="SmsStyle.css">
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="RevisedShowPreview.js"></script>
 
   <style>
@@ -81,6 +81,11 @@
 	option{
 		color:black;
 	}
+
+#sendButton:disabled 
+{
+       cursor: not-allowed;  
+}
 
   </style>
 </head>
@@ -290,7 +295,7 @@
                     <div class="col-sm-12 col-md-4 hidden" id="dateTimeField">
                       <div class="form-group">
                         <label for="dateTimeInput">Date and Time:</label>
-                        <input type="datetime-local" class="form-control" id="dateTimeInput" placeholder="Date and Time" />
+                        <input type="date" class="form-control" id="dateTimeInput" placeholder="Date and Time" />
                       </div>
                     </div>
                   </div>
@@ -378,7 +383,7 @@
     </div>
   </div>
 
-  <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
 		
 		function fetchJobID() {
@@ -545,7 +550,12 @@
       const input = event.target;
       input.value = input.value.replace(/[^0-9]/g, '');
     }
-  
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////// togglefields ////////////////////////////////////////////////////////////////////
+
+
     function toggleFields() {
       var smsType = document.getElementById('smsTypeSelect').value;
       var causeField = document.getElementById('causeField');
@@ -1201,6 +1211,69 @@
 	});
 	
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// Send notification API ////////////////////////////////////////////
+
+const smscontent = document.getElementById("smsRecipientBox"); 
+const recipient = document.getElementById("phoneNumberInput"); 
+const sendbtn1 =  document.getElementById("sendButton");
+
+smscontent.addEventListener("input" , checkForm); 
+recipient.addEventListener("input" , checkForm);  
+
+function checkForm() {
+
+if (smscontent.value.trim() !== "" && recipient.value.trim() !== "") {
+    sendbtn1.disabled = false;
+} else {
+    sendbtn1.disabled = true;
+}
+}
+
+sendbtn1.addEventListener("click", function() { 
+
+    const apiEndpoint = "https://desbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
+
+    const data = {
+        content: smscontent.value,
+        recipient: recipient.value.split(",").map(phone => phone.trim())
+    };
+
+    console.log("Sending data:", data);  
+
+    fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to send SMS. Response status: " + response.status);
+        }
+        return response.text();  
+    })
+    .then(responseText => {
+        console.log("Raw response text:", responseText);  
+        try {
+            const result = JSON.parse(responseText);  
+            if (result.success) {
+                alert("SMS Sent Successfully!");
+            } else {
+                alert("Failed to send SMS: " + result.message);
+            }
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            alert("Error: The server response was not valid JSON.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);  
+        alert("Error: " + error.message);
+    });
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////    Window page load by default language change //////////////////////////////////////////
@@ -1283,6 +1356,7 @@ Pageloadbydefault();
                myenglish();
                toggleFields();  
                isChinese = false;   
+               DateconvertToEnglish(); 
 
 
         } else if (selectedLanguage === "chinese") 
@@ -1290,6 +1364,7 @@ Pageloadbydefault();
                mychinese(); 
                toggleFields(); 
                isChinese = true;  
+               DateconvertToChinese(); 
 
         }
             
@@ -1331,7 +1406,6 @@ inputElements.forEach(id => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// power lost //////////////////////////////////////////////////////////////////////
 
-
 function PowerLost() {
 
     var powerLostInput = document.getElementById("powerLostInput");
@@ -1351,7 +1425,6 @@ function PowerLost() {
     });
   }
 PowerLost();
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////Free text /////////////////////////////////////////////////////////
@@ -1374,15 +1447,74 @@ smsinput.addEventListener("input", function () {
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Date and time //////////////////////////////////////////////
+
+
+
+let flatpickrInstance;
+let selectedDate = new Date(); 
+
+let debounceTimer;
+function debounce(func, delay) {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(func, delay);
+}
+
+
+function initializeDatePicker(locale, dateFormat) {
+
+  if (flatpickrInstance) {
+    flatpickrInstance.set("locale", locale); 
+    flatpickrInstance.set("dateFormat", dateFormat);  
+    flatpickrInstance.setDate(selectedDate);  
+    return; 
+  }
+
+  flatpickrInstance = flatpickr("#dateTimeInput", {
+    locale: locale, 
+    enableTime: true, 
+    noCalendar: false, 
+    dateFormat: dateFormat, 
+    defaultDate: selectedDate, 
+    time_24hr: true, 
+    minuteIncrement: 1, 
+    disableMobile: true, 
+    onChange: function(selectedDates, dateStr, instance) {
+    
+      debounce(function() {
+        selectedDate = selectedDates[0]; 
+        console.log("Selected Date and Time:", selectedDate);
+      }, 300); 
+    }
+  });
+}
+
+
+function DateconvertToChinese() {
+  initializeDatePicker('zh', 'Y年m月d日 H:i');
+}
+
+
+function DateconvertToEnglish() {
+  initializeDatePicker('en', 'd-m-Y H:i');
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  DateconvertToChinese();  
+}); 
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////  Manual entry of recipients Phone Number: /////////////////////////// 
 
-
-//const smsRecipientBox = document.getElementById("smsRecipientBox");
 const phoneNumberInput = document.getElementById("phoneNumberInput"); 
 const recepgroup = document.getElementById("recepgroupselected");
 
 const outputDiv = document.getElementById("output");
+
+outputDiv.style.display = "none"; 
 
 phoneNumberInput.addEventListener("input", function () {
   const phvalue = phoneNumberInput.value.trim();
@@ -1393,13 +1525,25 @@ phoneNumberInput.addEventListener("input", function () {
 
   if (validPhoneNumbers.length > 0) {
   
-    outputDiv.textContent = validPhoneNumbers.join(' ; '); 
-    console.log(outputDiv.json());
-  
+    outputDiv.textContent = validPhoneNumbers.join(' ; ');  
+
+    let phonenumberobj = { 
+           phoneNumber: outputDiv.textContent
+    };   
+        let jsonobj =  JSON.stringify(phonenumberobj); 
+        console.log(jsonobj);  
+
   } else {
-   
-     outputDiv.textContent = "Error: Please enter valid 10-digit phone numbers.";
+
+         let phonenumberobj1 = { 
+               phoneNumber: "Error: Please enter valid 10-digit phone numbers." 
+         }; 
+    
+         let jsonobj1 = JSON.stringify(phonenumberobj1);   
+         console.log(jsonobj1); 
+
   }
+
 });
 
 
