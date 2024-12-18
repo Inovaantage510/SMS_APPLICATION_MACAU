@@ -110,7 +110,7 @@
                       <div class="form-group">
                         <div class="form-group has-danger">
                           <label for="eventNumberInput" id="eventlang-Event_Number">Event Number</label>
-                          <input class="form-control form-control-danger" id="eventNumberInput" placeholder="Event Number" required="" aria-invalid="true">
+                          <input class="form-control form-control-danger" id="eventNumberInput" placeholder="" required="" aria-invalid="true">
                         </div>
                       </div>
                     </div>
@@ -158,25 +158,25 @@
                     <div class="col-sm-12 col-md-4 hidden" id="customerField">
                       <div class="form-group">
                         <label for="customerInput" id="event_customer">Customer:</label>
-                        <input type="number" class="form-control" id="customerInput" placeholder="Customer" value="0">
+                        <input type="number" class="form-control" id="customerInput" placeholder="" value="0">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="buildingField">
                       <div class="form-group">
                         <label for="buildingInput" id="event_building">Building:</label>
-                        <input type="number" class="form-control" id="buildingInput" placeholder="Building" value="0">
+                        <input type="number" class="form-control" id="buildingInput" placeholder="" value="0">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="offDateTimeField">
                       <div class="form-group">
                         <label for="offDateTimeInput" id="event_off_date_time">Off Date Time:</label>
-                        <input type="text" class="form-control" id="offDateTimeInput" placeholder="Off Date Time">
+                        <input type="text" class="form-control" id="offDateTimeInput" placeholder="">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
                       <div class="form-group">
                         <label for="restoreDateTimeInput" id="event_restore_date_time">Restore Date Time:</label>
-                        <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="Restore Date Time">
+                        <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-2 hidden" id="phaseField">
@@ -212,7 +212,7 @@
                     <div class="col-sm-12 col-md-4 hidden" id="repairObservationField">
                       <div class="form-group">
                         <label for="repairObservationInput">Observation:</label>
-                        <input type="text" class="form-control" id="repairObservationInput" placeholder="Repairing Observation">
+                        <input type="text" class="form-control" id="repairObservationInput" placeholder="">
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="observationField">
@@ -221,19 +221,6 @@
                         <!-- <input type="text" class="form-control" id="observationInput" placeholder="Observation"> -->
                         <select class="form-control" id="observationInput">
                           <option value="">--select</option>
-                          <option value="Yes">Burnt Smell</option>
-                          <option value="Yes">Fell Down</option>
-                          <option value="Yes">Noise</option>
-                          <option value="Yes">On Fire</option>
-                          <option value="Yes">Open</option>
-                          <option value="Yes">Peculiar Smell</option>
-                          <option value="Yes">Pull Off</option>
-                          <option value="Yes">Smoking</option>
-                          <option value="Yes">Spark</option>
-                          <!-- <option value="Yes">5</option>
-                          <option value="No">63</option>
-                          <option value="No">84</option> -->
-                          <!-- <option value="No">ST1</option> -->
                         </select>
                       </div>
                     </div>
@@ -295,7 +282,7 @@
                     <div class="col-sm-12 col-md-4 hidden" id="dateTimeField">
                       <div class="form-group">
                         <label for="dateTimeInput">Date and Time:</label>
-                        <input type="date" class="form-control" id="dateTimeInput" placeholder="Date and Time" />
+                        <input type="date" class="form-control" id="dateTimeInput" placeholder="" />
                       </div>
                     </div>
                   </div>
@@ -328,7 +315,7 @@
                     <div class="col-sm-12 col-md-6">
                     <div class="form-group" id="smsrecpbox">
                     <label id="eventlang_sms_recp_box">SMS Recipient Box:</label>
-                    <input type="text" class="form-control" placeholder="SMS Recipient Box" aria-label="Destination" aria-describedby="basic-addon2" id="smsRecipientBox">
+                    <input type="text" class="form-control" placeholder="" aria-label="Destination" aria-describedby="basic-addon2" id="smsRecipientBox">
                     </div>
                     </div> 
 
@@ -348,7 +335,7 @@
                     <div class="col-sm-12 col-md-6" id="phonenum">
                       <div class="form-group">
                         <label for="phoneNumberInput" id="eventlang-phone_number">Phone Number</label>
-                        <input type="tel" id="phoneNumberInput" class="form-control" placeholder="Phone Number" >   
+                        <input type="tel" id="phoneNumberInput" class="form-control" placeholder="" >   
                         <div id="output" style="margin-top:20px;"></div>                   
                       </div>
                       </div> 
@@ -552,6 +539,27 @@
     }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// Event number //////////////////////////////////////////////////////// 
+
+
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+fetch(apiUrl)
+  .then(response => {
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); 
+  })
+  .then(data => {
+    console.log(data); 
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////// togglefields ////////////////////////////////////////////////////////////////////
 
@@ -562,7 +570,9 @@
       var causeSelect = document.getElementById('causeSelect');
       var SmsCauseField = document.getElementById('SmsCauseField');
       var SmsCauseSelect = document.getElementById('SmsCauseSelect');
-  
+      var obvselect = document.getElementById('observationInput');
+
+      
       // Hide all fields initially
       document.getElementById('customerField').style.display = 'none';
       document.getElementById('buildingField').style.display = 'none';
@@ -571,8 +581,7 @@
       document.getElementById('phaseField').style.display = 'none';
       document.getElementById('PhaseButtons').style.display = 'none';
       document.getElementById('repairing').style.display = 'none';
-      document.getElementById('repairObservationField').style.display = 'none';
-      document.getElementById('observationField').style.display = 'none';
+      document.getElementById('repairObservationField').style.display = 'none'; 
       document.getElementById('cemNetworkAffectedField').style.display = 'none';
       document.getElementById('generatorField').style.display = 'none';
       document.getElementById('powerLostField').style.display = 'none';
@@ -581,10 +590,14 @@
       document.getElementById('Address').style.display = 'none';
       document.getElementById('PtList').style.display = 'none'; 
       document.getElementById('inptext').style.display = 'none';  
+      document.getElementById('observationField').style.display = 'none';
 
       // Clear cause options
       causeSelect.innerHTML = '<option value="">--select</option>';
-      SmsCauseSelect.innerHTML = '<option value="">--select</option>';
+      SmsCauseSelect.innerHTML = '<option value="">--select</option>'; 
+      obvselect.innerHTML = '<option value="">--select</option>' ; 
+
+
       if (smsType === 'outage') {
         var causes = ['Aging', 'Bad Contact', 'Burnt', 'Cancel Job', 'Damaged', 'Disconnection Non-payment', 'Fell Down', 'Fire Accident', 'Flooded', 'Fuse Blown', 'Fuse Base Burnt', 'Internal Fault', 'Loose'];
         var causeout = ['110kV Cable', '11kV Tr', '220kV Cable', '66kV Cable', '66kV/11kV Tr', 'Aerial Cable', 'CCL', 'CD', 'Customer', 'Customer CCL', 'LV Cable', 'MV Cable', 'Meter', 'Meter Wire Box', 'PH', 'QG', 'QGBT', 'RMU CB Open', 'Customer CCL Fuse Base', 'Under Investigation', 'Urgent Planned Outage'];
@@ -703,6 +716,25 @@
         var emergencyCauses = ['Aerial Cable','CCL','CD','Customer','Customer CCL','IP Pole','Meter','PT','Public Lighting','QGBT','Rising Mains','SS','Electric', 'Box']; // Add actual emergency causes here
         var emergencyCausesEMR = ['Aging','Animal','Artificial Destruction','Bad Contact','Damaged','Fire Accident','Flooded','Loose','Short Circuit','Termite','Traffic Accident','Under Investigation']; // Add actual emergency causes here
         
+        var ob_arr1 = [ 
+
+        'Burnt Smell', 'Fell Down' , 'Noise' , 'On Fire' , 'Open' , 'Peculiar Smell' , 'Pull Off' , 'Smoking' , 'Spark'  
+
+                     ];
+
+        var observation_arr2 = [ 
+
+                          '烧焦的气味', 
+                          '跌倒了', 
+                          '噪音', 
+                          '着火', 
+                          '打开', 
+                          '异味', 
+                          '拉开',
+                          '吸烟', 
+                          '火花' 
+
+        ]; 
         
          var emergencyarr = [
  
@@ -802,6 +834,30 @@
      }
          
 
+     let selected_value1 = document.getElementById("ls").value; 
+
+     switch(selected_value1)
+     {
+
+      case "chinese": 
+
+                    obvselect.disabled = false ;
+                    observation_arr2.forEach(function (cause) {
+                    var option2 = document.createElement('option');
+                    option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+                    option2.text = cause;
+                    obvselect.appendChild(option2);  
+                   });   
+
+             break;  
+
+        case "english": 
+                 obvselect.disabled = true;    
+               break; 
+           
+     }
+   
+
         SmsCauseField.style.display = 'block';
         causeField.style.display = 'block';
         document.getElementById('customerField').style.display = 'block';
@@ -813,8 +869,11 @@
         document.getElementById('inptext').style.display = 'none' ; 
         document.getElementById("caus").style.display = "block"; 
         document.getElementById("phonenum").style.display = "block";
-        document.getElementById("SmsCauseField").style.display = "block"; 
-      } 
+        document.getElementById("SmsCauseField").style.display = "block";   
+
+      }  
+
+
       else if (smsType === 'generator') {
         var generatorCauses = ['Generator De-rate','Generator Trip Off','Generator Unavailable','Test']; 
       
@@ -1036,6 +1095,7 @@
 
     else if (smsType === 'generator')
     {
+              let mw = 'MW';      
 
             switch(selectedLanguage1)
             {
@@ -1056,7 +1116,7 @@
                 previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
                 previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
                 previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
                 previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
                 previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
                 previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
@@ -1081,7 +1141,7 @@
                 previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
                 previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
                 previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
                 previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
                 previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
                 previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
@@ -1565,6 +1625,37 @@ recepgroup.addEventListener("input", function () {
       }
 
 }); 
+
+///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// Observation ////////////////////////////////////////
+
+
+// function observation() 
+// {
+
+
+
+
+
+
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </body>
