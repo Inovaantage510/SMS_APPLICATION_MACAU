@@ -406,7 +406,7 @@
 			return;
 			}
 			
-			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -432,7 +432,7 @@
 		}
 		
 		function fetchObjectId(jobId) {
-			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl=apiUrl.concat('/', jobId);
 			var username = "admin";
 			var password = "admin";
@@ -476,7 +476,7 @@
 		
 		function fetchOutageStepOffTime(jobId) {
 			
-			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -504,7 +504,7 @@
 		
 		function fetchtotalAffectedCustomers(jobId) {
 			
-			var apiUrl = "https://momsapp1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -1684,41 +1684,6 @@ function validation() {
 validation();  
 });
 
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////// History /////////////////////////////////////////////////////////////////
- 
-
-document.addEventListener('DOMContentLoaded', function () {
-
-function history() {
-
-  document.querySelector('[data-bs-toggle="modal"]').addEventListener('click', () => {
-    
-    var language = document.getElementById("ls").value;
-    
-    var modalContent = document.getElementById("historyContent");  
-
-    let array = {
- 
-        selectlang : language 
-    };
-
-    switch(language) {
-      case "english":
-        modalContent.textContent = array.selectlang;
-        break;
-      case "chinese":
-        modalContent.textContent = array.selectlang; 
-        break;
-    }
-  });
-}
-
-history();
-
-});  
 
 </script>
 </body>
