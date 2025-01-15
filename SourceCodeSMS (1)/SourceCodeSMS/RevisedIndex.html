@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="SmsStyle.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <script src="RevisedShowPreview.js"></script>
 
   <style>
@@ -88,18 +90,27 @@
        cursor: not-allowed;  
 }
 
+#logo 
+{
+      border-radius:50%; 
+      height:70px; 
+      width:70px; 
+      margin-left:8.1rem; 
+      box-shadow: 5px 5px 5px gray;
+}
+
   </style>
 </head>
 
-<body>
+<body style="background:rgb(232, 232, 232)">
   <nav>
     <a class="navbar-brand brand-logo" style="margin: auto; padding: 20px; text-align: justify; color: blue;">
-      <h1>CEM</h1>
+      <div style="margin-left:-4rem;"><img src = "unnamed.png" id="logo" /><h1 style="margin-left:35.2rem; color: black; margin-top:-3.5rem;">SMS APPLICATION FORM</h1></div>
     </a>
   </nav>
   <div class="container-fluid page-body-wrapper">
-    <div class="main-panel">
-      <div class="content-wrapper">
+    <div class="main-panel" >
+      <div class="content-wrapper" style="background:rgb(232, 232, 232); margin-top:-4rem;">
         <div class="row">
           <div class="col-12 grid-margin">
             <div class="card">
@@ -118,6 +129,7 @@
                     <div class="col-sm-12 col-md-3">
                       <div class="form-group">
                         <label for="smsTypeSelect" id="eventlang-sms-type">SMS Type :</label>
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:19rem; color:rgb(51,153,255);" id="arr2" onclick="togglearrow1()">▼</h6>
                         <select class="form-control" id="smsTypeSelect" onchange="toggleFields()">
                           <option value="">--select--</option>
                           <option value="outage"    id="event_out" selected>Outage</option>
@@ -130,6 +142,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3" id="SmsCauseField">
                       <div class="form-group">
+                        <h6 style="color: black; position: absolute; top:26px; margin-left:19rem; color:rgb(51,153,255);" id="arr8" onclick="togglearrow8()">▼</h6>
                         <br>
                         <select class="form-control" id="SmsCauseSelect">
                           <option value="">--select</option>
@@ -139,9 +152,10 @@
                     <div class="col-sm-12 col-md-3">
                       <div class="form-group">
                         <label for="languageSelect" id="eventlang-language">Language:</label>
-                        <select class="form-control" id="ls" onchange="changeLang()">
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:19rem; color:rgb(51,153,255);" id="langarrow" onclick="togglearrow()">▼</h6>
+                         <select class="form-control" id="ls" onchange="changeLang()">
                           <option value="english" onclick="myenglish()">English</option>
-                          <option value="chinese" onclick="mychinese()" selected>中国人</option>
+                          <option value="chinese" onclick="mychinese()"selected>中国人</option>
               
                         </select>
                       </div>
@@ -151,6 +165,7 @@
                     <div class="col-sm-12 col-md-4 hidden" id="causeField">
                       <div class="form-group" id="caus">
                         <label for="causeSelect" id="event_cause">Cause:</label>
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr3" onclick="togglearrow3()">▼</h6>
                         <select class="form-control" id="causeSelect">
                           <option value="">--select</option>
                         </select>
@@ -183,6 +198,7 @@
                     <div class="col-sm-12 col-md-2 hidden" id="phaseField">
                       <div class="form-group">
                         <label for="phaseSelect" id="event_phase">Phase:</label>
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:12rem; color:rgb(51,153,255);" id="arr4" onclick="togglearrow4()">▼</h6>
                         <select class="form-control" id="phaseSelect">
                           <option value="">--select</option>
                           <option value="A" id="phase_a">A</option>
@@ -212,6 +228,7 @@
                   </div>
                     <div class="col-sm-12 col-md-4 hidden" id="repairObservationField">
                       <div class="form-group">
+
                         <label for="repairObservationInput">Observation:</label>
                         <input type="text" class="form-control" id="repairObservationInput" placeholder="">
                       </div>
@@ -220,6 +237,7 @@
                       <div class="form-group">
                         <label for="observationInput">Observation:</label>
                         <!-- <input type="text" class="form-control" id="observationInput" placeholder="Observation"> -->
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr9" onclick="togglearrow9()">▼</h6>
                         <select class="form-control" id="observationInput">
                           <option value="">--select</option>
                         </select>
@@ -229,6 +247,7 @@
                       <div class="form-group">
                         <label for="affectedNetworkInput">CEM Network Affected:</label>
                         <!-- <input type="text" class="form-control" id="affectedNetworkInput" placeholder="CEM Network Affected"> -->
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr6" onclick="togglearrow6()">▼</h6>
                         <select class="form-control" id="affectedNetworkInput">
                           <option value="">--select</option>
                           <option value="Yes">Yes</option>
@@ -239,6 +258,7 @@
                       <div class="form-group">
                         <label for="generatorInput">Generator:</label>
                         <!-- <input type="text" class="form-control" id="generatorInput" placeholder="Generator"> -->
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr5" onclick="togglearrow5()">▼</h6>
                         <select class="form-control" id="generatorInput">
                           <option value="" selected disabled>--select</option>
                           <option value="Yes">G03</option>
@@ -261,6 +281,7 @@
                       <div class="form-group">
                         <label for="powerLostInput">Power Lost:</label>
                         <!-- <input type="text" class="form-control" id="powerLostInput" placeholder="Power Lost"> -->
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr7" onclick="togglearrow7()">▼</h6>
                         <select class="form-control" id="powerLostInput">
                           <option value="" selected disabled>--select</option>
                           <option value="0" id="y">0</option>
@@ -406,7 +427,7 @@
 			return;
 			}
 			
-			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -431,33 +452,46 @@
 			.catch(error => console.error('Error fetching previous data:', error));
 		}
 		
-		function fetchObjectId(jobId) {
-			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
-			apiUrl=apiUrl.concat('/', jobId);
-			var username = "admin";
-			var password = "admin";
-			var base64Credentials = btoa(username + ':' + password);
-			return fetch(apiUrl,{headers: {
-			'Content-Type': 'application/json',
-			'Authorization': 'Basic ' + base64Credentials
-			}
-			})
-				.then(response => {
-					if (!response.ok) {
-					throw new Error('Failed to fetch object ID');
-					}
-				return response.json();
-				})
-				.then(data => {
-				console.log(data);
-                var objectId = data.id;
-				return objectId;
-				})
-				.catch(error => {
-				console.error('Error fetching object ID:', error);
-				return null;
-				});
-		}
+		function fetchObjectId(jobId)  
+    { 
+
+    var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
+    apiUrl = apiUrl.concat('/', jobId);  
+    var username = "admin";
+    var password = "admin";
+    var base64Credentials = btoa(username + ':' + password);
+
+    return fetch(apiUrl, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + base64Credentials
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch object ID');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        
+        var displayID = data.displayID || null;  
+
+        var jobIdInput = document.getElementById('eventNumberInput');
+        if (jobIdInput) {
+            jobIdInput.value = displayID || '';  
+            jobIdInput.setAttribute('readonly', 'true');  
+        }
+
+            return displayID;  
+    })
+    .catch(error => {
+        console.error('Error fetching object ID:', error);
+        return null;
+    }); 
+
+    }
 		
 		function padToTwoDigits(number){
 			return number.toString().padStart(2, '0');
@@ -476,7 +510,7 @@
 		
 		function fetchOutageStepOffTime(jobId) {
 			
-			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -504,7 +538,7 @@
 		
 		function fetchtotalAffectedCustomers(jobId) {
 			
-			var apiUrl = "https://mpdsweb1/oms/external/api/ServiceType/Electric/Job";
+			var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
 			apiUrl = apiUrl.concat('/',jobId);
 			const username = "admin";
 			const password = "admin";
@@ -556,34 +590,12 @@
         language: "语言：",
       }
     };
-   
-  
+
     function restrictInputToNumbers(event) {
       const input = event.target;
       input.value = input.value.replace(/[^0-9]/g, '');
     }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////// Event number //////////////////////////////////////////////////////// 
-
-
-const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
-
-fetch(apiUrl)
-  .then(response => {
-    
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json(); 
-  })
-  .then(data => {
-    console.log(data); 
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////// togglefields ////////////////////////////////////////////////////////////////////
@@ -597,7 +609,7 @@ fetch(apiUrl)
       var SmsCauseSelect = document.getElementById('SmsCauseSelect');
       var obvselect = document.getElementById('observationInput');
 
-      
+
       // Hide all fields initially
       document.getElementById('customerField').style.display = 'none';
       document.getElementById('buildingField').style.display = 'none';
@@ -621,6 +633,7 @@ fetch(apiUrl)
       causeSelect.innerHTML = '<option value="">--select</option>';
       SmsCauseSelect.innerHTML = '<option value="">--select</option>'; 
       obvselect.innerHTML = '<option value="">--select</option>' ; 
+
 
 
       if (smsType === 'outage') {
@@ -866,7 +879,8 @@ fetch(apiUrl)
 
       case "chinese": 
 
-                    obvselect.disabled = false ;
+                    obvselect.disabled = false ; 
+                    togglearrow9(); 
                     observation_arr2.forEach(function (cause) {
                     var option2 = document.createElement('option');
                     option2.value = cause.toLowerCase().replace(/\s+/g, '_');
@@ -878,7 +892,12 @@ fetch(apiUrl)
 
         case "english": 
                  obvselect.disabled = true;    
-               break; 
+                 togglearrow9(); 
+                 let styleevent = document.getElementById("arr9"); 
+                 styleevent.style.pointerEvents = "none"; 
+                 styleevent.style.color = "gray"; 
+
+             break; 
            
      }
    
@@ -1296,6 +1315,40 @@ fetch(apiUrl)
 	});
 	
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// Function to set default SMS type as 'Outage' when outageType is 'OUTAGE'//////////////////////
+
+
+function setDefaultSMSType(jobId) {
+
+    var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
+    apiUrl = apiUrl.concat('/', jobId);
+    const username = "admin";
+    const password = "admin";
+    const base64Credentials = btoa(username + ':' + password);
+    
+    return fetch(apiUrl, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + base64Credentials
+        }
+    })   
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch data: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        var outageType = data.outageType;
+        if (outageType === 'Outage') {
+            document.getElementById('smsTypeSelect').value = 'Outage';  
+        }
+    })
+    .catch(error => console.error('Error fetching outage type:', error));
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// Send notification API ////////////////////////////////////////////
 
@@ -1317,7 +1370,7 @@ if (smscontent.value.trim() !== "" && recipient.value.trim() !== "") {
 
 sendbtn1.addEventListener("click", function() { 
 
-    const apiEndpoint = "https://desbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
+    const apiEndpoint = "https://uesbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
 
     const data = {
         content: smscontent.value,
@@ -1366,14 +1419,214 @@ sendbtn1.addEventListener("click", function() {
 const Pageloadbydefault = () => { 
 
 window.onload = function() {
-    changeLang();
+    changeLang();   
 };
 
 }
 Pageloadbydefault(); 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// toggle arrow design /////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////// 
+
+function togglearrow()   
+{
+     let langarrow = document.getElementById("langarrow");    
+     
+      if(langarrow.textContent === "▼")
+      {
+           langarrow.textContent = "▲"; 
+           langarrow.style.fontSize = "13px"; 
+           langarrow.style.marginTop = "10px"; 
+           langarrow.style.color = "rgb(51,153,255)";    
+      }
+      else if(langarrow.textContent === "▲")
+      {
+            langarrow.textContent = "▼" ;
+            langarrow.style.fontSize = "13px"; 
+            langarrow.style.marginTop = "10px";
+            langarrow.style.color = "rgb(51,153,255)"; 
+      } 
+}
+
+function togglearrow1()
+{
+
+      let a  = document.getElementById("arr2");
+
+      if(a.textContent === "▼")
+      {
+           a.textContent = "▲"; 
+           a.style.fontSize = "13px"; 
+           a.style.marginTop = "10px"; 
+           a.style.color = "rgb(51,153,255)";    
+      }
+      else if(a.textContent === "▲")
+      {
+            a.textContent = "▼" ;
+            a.style.fontSize = "13px"; 
+            a.style.marginTop = "10px";
+            a.style.color = "rgb(51,153,255)"; 
+      } 
+
+}
+function togglearrow3()
+{
+
+      let b = document.getElementById("arr3"); 
+
+      if(b.textContent === "▼")
+      {
+           b.textContent = "▲"; 
+           b.style.fontSize = "13px"; 
+           b.style.marginTop = "10px"; 
+           b.style.color = "rgb(51,153,255)";    
+      }
+      else if(b.textContent === "▲")
+      {
+            b.textContent = "▼" ;
+            b.style.fontSize = "13px"; 
+            b.style.marginTop = "10px";
+            b.style.color = "rgb(51,153,255)"; 
+      } 
+}
+
+function togglearrow4()
+{
+ 
+     let c  = document.getElementById("arr4"); 
+
+     if(c.textContent === "▼")
+      {
+           c.textContent = "▲"; 
+           c.style.fontSize = "13px"; 
+           c.style.marginTop = "10px"; 
+           c.style.color = "rgb(51,153,255)";    
+      }
+      else if(c.textContent === "▲")
+      {
+            c.textContent = "▼" ;
+            c.style.fontSize = "13px"; 
+            c.style.marginTop = "10px";
+            c.style.color = "rgb(51,153,255)"; 
+      } 
+
+}
+
+
+function togglearrow5()
+{
+
+       let d = document.getElementById('arr5'); 
+
+
+       if(d.textContent === "▼")
+      {
+           d.textContent = "▲"; 
+           d.style.fontSize = "13px"; 
+           d.style.marginTop = "10px"; 
+           d.style.color = "rgb(51,153,255)";    
+      }
+      else if(d.textContent === "▲")
+      {
+            d.textContent = "▼" ;
+            d.style.fontSize = "13px"; 
+            d.style.marginTop = "10px";
+            d.style.color = "rgb(51,153,255)"; 
+      }  
+}
+
+function togglearrow6()
+{
+    
+      let e = document.getElementById("arr6"); 
+      
+      if(e.textContent === "▼")
+      {
+           e.textContent = "▲"; 
+           e.style.fontSize = "13px"; 
+           e.style.marginTop = "10px"; 
+           e.style.color = "rgb(51,153,255)";    
+      }
+      else if(e.textContent === "▲")
+      {
+            e.textContent = "▼" ;
+            e.style.fontSize = "13px"; 
+            e.style.marginTop = "10px";
+            e.style.color = "rgb(51,153,255)"; 
+      }  
+}
+
+function togglearrow7()
+{
+
+      let f = document.getElementById("arr7"); 
+      
+      if(f.textContent === "▼")
+      {
+           f.textContent = "▲"; 
+           f.style.fontSize = "13px"; 
+           f.style.marginTop = "10px"; 
+           f.style.color = "rgb(51,153,255)";    
+      }
+      else if(f.textContent === "▲")
+      {
+            f.textContent = "▼" ;
+            f.style.fontSize = "13px"; 
+            f.style.marginTop = "10px";
+            f.style.color = "rgb(51,153,255)"; 
+      }  
+     
+}
+
+function togglearrow8()
+{
+
+
+      let h = document.getElementById("arr8"); 
+      
+      if(h.textContent === "▼")
+      {
+           h.textContent = "▲"; 
+           h.style.fontSize = "13px"; 
+           h.style.marginTop = "10px"; 
+           h.style.color = "rgb(51,153,255)";    
+      }
+      else if(h.textContent === "▲")
+      {
+            h.textContent = "▼" ;
+            h.style.fontSize = "13px"; 
+            h.style.marginTop = "10px";
+            h.style.color = "rgb(51,153,255)"; 
+      }  
+
+}
+
+
+function togglearrow9()
+{
+
+      let s = document.getElementById("arr9"); 
+      
+      if(s.textContent === "▼")
+      {
+           s.textContent = "▲"; 
+           s.style.fontSize = "13px"; 
+           s.style.marginTop = "10px"; 
+           s.style.color = "rgb(51,153,255)";    
+      }
+      else if(s.textContent === "▲")
+      {
+            s.textContent = "▼" ;
+            s.style.fontSize = "13px"; 
+            s.style.marginTop = "10px";
+            s.style.color = "rgb(51,153,255)"; 
+      }  
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////// Langauges //////////////////////////////////////////////////////////
 
 
   function myenglish()
@@ -1441,7 +1694,15 @@ Pageloadbydefault();
                myenglish();
                toggleFields();  
                isChinese = false;   
-               DateconvertToEnglish(); 
+               DateconvertToEnglish();  
+               togglearrow();  
+               togglearrow1();  
+               togglearrow3(); 
+               togglearrow4();  
+               togglearrow5(); 
+               togglearrow6(); 
+               togglearrow7(); 
+               togglearrow8(); 
 
 
         } else if (selectedLanguage === "chinese") 
@@ -1450,7 +1711,14 @@ Pageloadbydefault();
                toggleFields(); 
                isChinese = true;  
                DateconvertToChinese(); 
-
+               togglearrow(); 
+               togglearrow1(); 
+               togglearrow3(); 
+               togglearrow4(); 
+               togglearrow5(); 
+               togglearrow6(); 
+               togglearrow7(); 
+               togglearrow8(); 
         }
             
     } 
@@ -1500,8 +1768,8 @@ function PowerLost() {
         var selectedValue = powerLostInput.value; 
         if (selectedValue) { 
           mwLabel.textContent = selectedValue + " MW"; 
-          mwLabel.style.marginTop = "-26px"; 
-          mwLabel.style.marginLeft = "14.5px";   
+          mwLabel.style.marginTop = "-30px"; 
+          mwLabel.style.marginLeft = "14.2px";   
           mwLabel.style.fontSize = "13px";  
         } 
       } catch (error) {
