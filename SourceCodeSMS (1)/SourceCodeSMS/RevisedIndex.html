@@ -1320,32 +1320,53 @@
 
 
 function setDefaultSMSType(jobId) {
-
-    var apiUrl = "https://mpdsapp1/oms/external/api/ServiceType/Electric/Job";
-    apiUrl = apiUrl.concat('/', jobId);
+  
+    const apiUrl = `https://mpdsapp1/oms/external/api/ServiceType/Electric/Job/${jobId}`;
     const username = "admin";
     const password = "admin";
-    const base64Credentials = btoa(username + ':' + password);
-    
+    const base64Credentials = btoa(`${username}:${password}`);
+
     return fetch(apiUrl, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + base64Credentials
-        }
-    })   
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to fetch data: ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        var outageType = data.outageType;
-        if (outageType === 'Outage') {
-            document.getElementById('smsTypeSelect').value = 'Outage';  
+            'Authorization': `Basic ${base64Credentials}`
         }
     })
-    .catch(error => console.error('Error fetching outage type:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.jobId && data.outageType) {
+                console.log("Fetched Data:", data);
+                simulateAPIResponse(data.jobId);
+                simulateAPIResponse(data.outageType);
+            } else {
+                console.error("Invalid API response:", data);
+            }
+        })
+        .catch(error => console.error("Error fetching outage type:", error));
+}
+
+function getDefaultSMSType(jobId) {
+    if (typeof jobId === "number" || 
+        ["OUTAGE", "Outage", "outage"].includes(jobId)) {
+        const jobType = document.getElementById("smsTypeSelect").value;
+        return `Job ID: ${jobId}, Job Type: ${jobType}, SMS Type: Outage SMS`;
+    }
+    return null;
+}
+
+function simulateAPIResponse(input) {
+    const result = getDefaultSMSType(input);
+
+    if (result) {
+        console.log(result);
+    } else {
+        console.error(`Invalid Job ID: ${input}`);
+    }
 }
 
 
@@ -1397,7 +1418,7 @@ sendbtn1.addEventListener("click", function() {
         try {
             const result = JSON.parse(responseText);  
             if (result.success) {
-                alert("SMS Sent Successfully!");
+                alert("SMS Sent Successfully!");  
             } else {
                 alert("Failed to send SMS: " + result.message);
             }
