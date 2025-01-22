@@ -327,11 +327,12 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary mr-2" id="savebtn">Save</button>
+                        <button type="submit" class="btn btn-primary mr-2" onclick="saveBtn()">Save</button>
                         <button type="submit" class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                            History
                         </button>  
                       </div>  
+                    </div>
                     <div class="row">
                       <label for="exampleInputName1" id="eventlang-destination">Destination:</label>
                       <br></div>
@@ -394,6 +395,17 @@
     </div>
   </div> 
 
+
+<!-- save Modal -->
+<div id="saveModal" class="modal" style="overflow-y:scroll">
+  <div class="modal-content">
+    <h2>SAVE ITEMS</h2>
+    <div id="saveContent"></div>
+    <button onclick="cl2()">Cancel</button>
+  </div>
+</div> 
+
+
 <div id="modallanguagevalue"></div>
 
 <!-- Modal Structure -->
@@ -413,6 +425,7 @@
     </div>
   </div>
 </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -1255,8 +1268,14 @@
 }
 
 
-    function closeModal() {
-      document.getElementById('previewModal').style.display = 'none';
+    function closeModal()  
+    { 
+        document.getElementById('previewModal').style.display = 'none'; 
+    }
+
+    function cl2()
+    {
+        document.getElementById('saveModal').style.display = 'none';  
     }
 
 
@@ -1371,35 +1390,37 @@ function simulateAPIResponse(input) {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// Send notification API ////////////////////////////////////////////
+//////////////////////////////////////// Send notification API //////////////////////////////////////////////
 
-const smscontent = document.getElementById("smsRecipientBox"); 
-const recipient = document.getElementById("phoneNumberInput"); 
-const sendbtn1 =  document.getElementById("sendButton");
 
-smscontent.addEventListener("input" , checkForm); 
-recipient.addEventListener("input" , checkForm);  
+const smsContent = document.getElementById("smsRecipientBox");
+const recipient = document.getElementById("phoneNumberInput");
+const sendBtn = document.getElementById("sendButton");
+
+
+smsContent.addEventListener("input", checkForm);
+recipient.addEventListener("input", checkForm);
+
 
 function checkForm() {
-
-if (smscontent.value.trim() !== "" && recipient.value.trim() !== "") {
-    sendbtn1.disabled = false;
-} else {
-    sendbtn1.disabled = true;
+    if (smsContent.value.trim() !== "" && recipient.value.trim() !== "") {
+        sendBtn.disabled = false;
+    } else {
+        sendBtn.disabled = true;
+    }
 }
-}
 
-sendbtn1.addEventListener("click", function() { 
-
+sendBtn.addEventListener("click", function () {
     const apiEndpoint = "https://uesbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
 
+    
     const data = {
-        content: smscontent.value,
-        recipient: recipient.value.split(",").map(phone => phone.trim())
+        content: smsContent.value,
+        recipient: recipient.value.split(",").map(phone => phone.trim()) 
     };
 
-    console.log("Sending data:", data);  
-
+    console.log("Sending data:", data); 
+  
     fetch(apiEndpoint, {
         method: "POST",
         headers: {
@@ -1407,30 +1428,26 @@ sendbtn1.addEventListener("click", function() {
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Failed to send SMS. Response status: " + response.status);
-        }
-        return response.text();  
-    })
-    .then(responseText => {
-        console.log("Raw response text:", responseText);  
-        try {
-            const result = JSON.parse(responseText);  
-            if (result.success) {
-                alert("SMS Sent Successfully!");  
-            } else {
-                alert("Failed to send SMS: " + result.message);
+        .then(response => {
+          
+            if (!response.ok) {
+                throw new Error(`Failed to send SMS. HTTP status: ${response.status}`);
             }
-        } catch (error) {
-            console.error("Error parsing JSON:", error);
-            alert("Error: The server response was not valid JSON.");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);  
-        alert("Error: " + error.message);
-    });
+            return response.json(); 
+        })
+        .then(result => {
+            console.log("Server response:", result); 
+            if (result.success) {
+                alert("SMS Sent Successfully!");
+            } else {
+                alert("Failed to send SMS: " + (result.message || "Unknown error"));
+            }
+        })
+        .catch(error => {
+           
+            console.error("Error occurred:", error);
+            alert("Error: " + error.message);
+        });
 });
 
 
@@ -1941,38 +1958,180 @@ recepgroup.addEventListener("input", function () {
 /////////////////////////////////// Validation ////////////////////////////////////////////////
 
 
-document.addEventListener('DOMContentLoaded', function () { 
+// document.addEventListener('DOMContentLoaded', function () { 
 
-function validation() {
-    var recepgroup = document.getElementById('recepgroupselected');
-    var phonenum = document.getElementById('phoneNumberInput');
-    var saveButton = document.getElementById('savebtn');
+// function validation() {
+//     var recepgroup = document.getElementById('recepgroupselected');
+//     var phonenum = document.getElementById('phoneNumberInput');
+//     var saveButton = document.getElementById('savebtn');
 
-    if (!recepgroup || !phonenum || !saveButton) {
-        console.error("One or more elements are missing in the DOM.");
-        return;
+//     if (!recepgroup || !phonenum || !saveButton) {
+//        alert("One or more elements are missing in the DOM.");
+//         return;
+//     }
+
+      
+//     saveButton.addEventListener("click", function() {
+            
+//       saveBtn();
+//       var phonenumValue = phonenum.value.trim();  
+//         var recepgroupValue = recepgroup.value.trim();   
+        
+//         alert('Phone Number:', phonenumValue);   
+//         alert('Recipient Group:', recepgroupValue);   
+      
+
+//         if (phonenumValue === '' && recepgroupValue === '') {
+//             alert("You cannot send the message without selecting a recipient group or providing a phone number.");
+//         } else {
+//             alert("You will send the message.");  
+//         }
+//     });
+// }
+
+// validation();  
+// });
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// SAVE //////////////////////////////////////////////////////////////////////////////
+
+function saveBtn() { 
+
+
+    var eventNumber = document.getElementById('eventNumberInput').value;
+    var smsType = document.getElementById('smsTypeSelect').value;
+    var cause = document.getElementById('causeSelect').value;
+    var Smscause = document.getElementById('SmsCauseSelect').value;
+    var customer = document.getElementById('customerInput').value;
+    var building = document.getElementById('buildingInput').value;
+    var offDateTime = document.getElementById('offDateTimeInput').value;
+    var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
+    var phase = document.getElementById('phaseSelect').value;
+    var repairingObservation = document.getElementById('repairObservationInput').value;
+    var observation = document.getElementById('observationInput').value;
+    var affectedNetwork = document.getElementById('affectedNetworkInput').value;
+    var generator = document.getElementById('generatorInput').value;
+    var powerLost = document.getElementById('powerLostInput').value;
+    var dateTime = document.getElementById('dateTimeInput').value;
+    var Address = document.getElementById('addressInput').value;
+    var Remarks = document.getElementById('RemarkInput').value;
+    var freetext = document.getElementById('inptext').value;
+
+    var saveContent = '</p>';
+
+    const englishcontainerobj = {
+        o: "Outage",
+        e: "Emergency",
+        g: "Generator",
+        f: "Free Text"
+    };
+
+    const chinesecontainerobj = {
+        o: "停电",
+        e: "紧急情况",
+        g: "发电机",
+        f: "自由文本"
+    };
+
+    let slci = document.getElementById("ls").value;
+
+    function getNullOrValue(value) {
+        return value === "" ? "null" : value;
     }
 
-      
-    saveButton.addEventListener("click", function() {
-        
-        var phonenumValue = phonenum.value.trim();  
-        var recepgroupValue = recepgroup.value.trim();   
-        
-        console.log('Phone Number:', phonenumValue);   
-        console.log('Recipient Group:', recepgroupValue);   
-      
-        if (phonenumValue === '' && recepgroupValue === '') {
-            alert("You cannot send the message without selecting a recipient group or providing a phone number.");
-        } else {
-            alert("You will send the message.");  
+    if (smsType === 'outage') {
+        switch (slci) {
+            case "english":
+                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                saveContent += '<p>smsType: ' + englishcontainerobj.o + '</p>';
+                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+
+            case "chinese":
+                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                saveContent += '<p>smsType: ' + chinesecontainerobj.o + '</p>';
+                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
         }
-    });
+    } else if (smsType === 'emergency') {
+        switch (slci) {
+            case "english":
+                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                saveContent += '<p>smsType: ' + englishcontainerobj.e + '</p>';
+                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+
+            case "chinese":
+                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+                saveContent += '<p>smsType: ' + chinesecontainerobj.e + '</p>';
+                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                break;
+        }
+    }      
+             document.getElementById('saveContent').innerHTML = saveContent;
+             document.getElementById('saveModal').style.display = 'block';  
 }
-
-validation();  
-});
-
 
 </script>
 </body>
