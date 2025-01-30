@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Event</title>
+  <title>SMS page</title>
 
   <link rel="stylesheet" href="Base1.css">
   <link rel="stylesheet" href="Addon1.css">
@@ -90,14 +90,6 @@
        cursor: not-allowed;  
 }
 
-#logo 
-{
-      border-radius:50%; 
-      height:70px; 
-      width:70px; 
-      margin-left:8.1rem; 
-      box-shadow: 5px 5px 5px gray;
-}
 
   </style>
 </head>
@@ -105,7 +97,7 @@
 <body style="background:rgb(232, 232, 232)">
   <nav>
     <a class="navbar-brand brand-logo" style="margin: auto; padding: 20px; text-align: justify; color: blue;">
-      <div style="margin-left:-4rem;"><img src = "unnamed.png" id="logo" /><h1 style="margin-left:35.2rem; color: black; margin-top:-3.5rem;">SMS APPLICATION FORM</h1></div>
+      <div style="margin-left:-4rem;"><h1 style="margin-left:35.2rem; color: black; margin-top:1.5rem;">SMS APPLICATION FORM</h1></div>
     </a>
   </nav>
   <div class="container-fluid page-body-wrapper">
@@ -142,6 +134,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3" id="SmsCauseField">
                       <div class="form-group">
+                        <label for="" id="">Cause:</label>
                         <h6 style="color: black; position: absolute; top:26px; margin-left:19rem; color:rgb(51,153,255);" id="arr8" onclick="togglearrow8()">▼</h6>
                         <br>
                         <select class="form-control" id="SmsCauseSelect">
@@ -164,7 +157,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-4 hidden" id="causeField">
                       <div class="form-group" id="caus">
-                        <label for="causeSelect" id="event_cause">Cause:</label>
+                        <label for="causeSelect" id="event_cause">Reason:</label>
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr3" onclick="togglearrow3()">▼</h6>
                         <select class="form-control" id="causeSelect">
                           <option value="">--select</option>
@@ -173,7 +166,7 @@
                     </div>
                     <div class="col-sm-12 col-md-4 hidden" id="customerField">
                       <div class="form-group">
-                        <label for="customerInput" id="event_customer">Customer:</label>
+                        <label for="customerInput" id="event_customer">Customer</label>
                         <input type="number" class="form-control" id="customerInput" placeholder="" value="0">
                       </div>
                     </div>
@@ -189,12 +182,29 @@
                         <input type="text" class="form-control" id="offDateTimeInput" placeholder="">
                       </div>
                     </div>
-                    <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
+
+
+                    <!-- <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
                       <div class="form-group">
                         <label for="restoreDateTimeInput" id="event_restore_date_time">Restore Date Time:</label>
                         <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="">
                       </div>
+                    </div> --> 
+ 
+                    <!-- <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
+                      <div class="form-group">
+                          <label for="restoreDateTimeInput" id="event_restore_date_time">Restore Date Time:</label>
+                          <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="">
+                      </div>
+                  </div>   --> 
+
+                  <div class="col-sm-12 col-md-4 hidden" id="restoreDateTimeField">
+                    <div class="form-group">
+                        <label for="restoreDateTimeInput" id="event_restore_date_time">Restore Date Time:</label>
+                        <input type="datetime-local" class="form-control" id="restoreDateTimeInput" placeholder="" >
                     </div>
+                </div>
+
                     <div class="col-sm-12 col-md-2 hidden" id="phaseField">
                       <div class="form-group">
                         <label for="phaseSelect" id="event_phase">Phase:</label>
@@ -210,14 +220,33 @@
                           <option value="ABC" id="phase_abc">ABC</option>
                         </select>
                     </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2 hidden" id="repairing">
+                    </div> 
+
+                    <!-- <div class="col-sm-12 col-md-2 hidden" id="repairing">
                       <div class="form-group">
                         <br>
                         <label for="repairing" id="event_repairing">Repairing</label>
-                        <input type="checkbox" name="" id=""><br> <br> 
+                        <input type="checkbox" name="" id="repaircheckbox" onclick="restoreDate_time()"><br> <br> 
                     </div>
+                    </div> -->
+
+                    <!-- <div class="col-sm-12 col-md-2" id="repairing">
+                      <div class="form-group">
+                          <br>
+                          <label for="repairing" id="event_repairing">Repairing</label>
+                          <input type="checkbox" id="repaircheckbox" onclick="restoreDate_time()"> <br><br>
+                      </div>
+                  </div>  --> 
+
+
+                  <div class="col-sm-12 col-md-2" id="repairing">
+                    <div class="form-group">
+                        <br>
+                        <label for="repairing" id="event_repairing">Repairing</label>
+                        <input type="checkbox" id="repaircheckbox" onclick="restoreDate_time()"> <br><br>
                     </div>
+                </div>
+
                   <!-- </div> -->
                   <div class="rowPhase hidden" id ="PhaseButtons">
                       <div class="form-group-phase">
@@ -240,6 +269,15 @@
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr9" onclick="togglearrow9()">▼</h6>
                         <select class="form-control" id="observationInput">
                           <option value="">--select</option>
+                          <option value="Smell of something burning">Smell of something burning</option>
+                          <option value="Fell down">Fell down</option>
+                          <option value="Noise">Noise</option>
+                          <option value="On fire">On fire</option>
+                          <option value="Open">Open</option>
+                          <option value="Strange smell">Strange smell</option>
+                          <option value="Pull open">Pull open</option>
+                          <option value="Smoking">Smoking</option>
+                          <option value="Spark">Spark</option>
                         </select>
                       </div>
                     </div>
@@ -253,14 +291,16 @@
                           <option value="Yes">Yes</option>
                           <option value="No">No</option></select>
                       </div>
-                    </div>
-                     <div class="col-sm-12 col-md-4 hidden" id="generatorField">
+                    </div> 
+
+
+                     <!-- <div class="col-sm-12 col-md-4 hidden" id="generatorField">
                       <div class="form-group">
                         <label for="generatorInput">Generator:</label>
-                        <!-- <input type="text" class="form-control" id="generatorInput" placeholder="Generator"> -->
+                        <input type="text" class="form-control" id="generatorInput" placeholder="Generator"> 
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr5" onclick="togglearrow5()">▼</h6>
                         <select class="form-control" id="generatorInput">
-                          <option value="" selected disabled>--select</option>
+                          <option value="" selected>--select</option>
                           <option value="Yes">G03</option>
                           <option value="Yes">G04</option>
                           <option value="Yes">G05</option>
@@ -276,7 +316,37 @@
                           <option value="No">ST1</option>
                         </select>
                       </div>
+                    </div> --> 
+
+
+
+                    <div class="col-sm-12 col-md-4 hidden" id="generatorField">
+                      <div class="form-group">
+                        <label for="generatorInput">Generator:</label>
+                        <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr5" onclick="togglearrow5()">▼</h6>
+                        <select class="form-control" id="generatorInput">
+                          <option value="" selected>--select</option>
+                          <option value="G03">G03</option>
+                          <option value="G04">G04</option>
+                          <option value="G05">G05</option>
+                          <option value="G06">G06</option>
+                          <option value="G07">G07</option>
+                          <option value="G08">G08</option>
+                          <option value="G1+G2+ST1">G1+G2+ST1</option>
+                          <option value="GT1">GT1</option>
+                          <option value="GT1+GT2">GT1+GT2</option>
+                          <option value="GT1+ST1">GT1+ST1</option>
+                          <option value="GT2">GT2</option>
+                          <option value="GT2+ST1">GT2+ST1</option>
+                          <option value="ST1">ST1</option>
+                        </select>
+                      </div>
                     </div>
+
+
+
+
+
                     <div class="col-sm-12 col-md-4 hidden" id="powerLostField">
                       <div class="form-group">
                         <label for="powerLostInput">Power Lost:</label>
@@ -323,11 +393,12 @@
                   <div class="rowPreview">
                       <div class="form-group">
                         <button type="button" class="btn btn-primary" onclick="showPreview()">Preview</button>
-                        <button type="button" class="btn btn-primary" onclick="resetForm()">Reset</button>                      </div>
+                        <button type="button" class="btn btn-primary" onclick="resetForm()">Reset</button>                      
+                     </div>
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary mr-2" onclick="saveBtn()">Save</button>
+                        <button type="button" class="btn btn-primary mr-2" id="savebtn"  onclick="saveBtn()">Save</button>
                         <button type="submit" class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                            History
                         </button>  
@@ -364,11 +435,7 @@
                         <div id="output" style="margin-top:20px;"></div>                   
                       </div>
                       </div> 
-                    <!-- <div class="col-sm-12">
-                      <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary mr-2">Save</button>
-                        <button type="submit" class="btn btn-primary mr-2">History</button>
-                      </div> -->
+          
                   </div>
                   <div class="col-sm-12" id="send">
                     <div class="form-group" id="send">
@@ -386,7 +453,7 @@
 
 
   <!-- Preview Modal -->
-  <div id="previewModal" class="modal" style="overflow-y:scroll">
+  <div id="previewModal" class="modal" style="overflow-y:scroll; height:45%;">
     <div class="modal-content">
       <h2>SMS Preview</h2>
       <div id="previewContent"></div>
@@ -396,7 +463,7 @@
   </div> 
 
 
-<!-- save Modal -->
+  <!-- SAVE Modal -->
 <div id="saveModal" class="modal" style="overflow-y:scroll">
   <div class="modal-content">
     <h2>SAVE ITEMS</h2>
@@ -407,24 +474,6 @@
 
 
 <div id="modallanguagevalue"></div>
-
-<!-- Modal Structure -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">SMS History</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="historyContent">
-        <!-- SMS History content will be injected here -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> 
@@ -620,7 +669,7 @@
       var causeSelect = document.getElementById('causeSelect');
       var SmsCauseField = document.getElementById('SmsCauseField');
       var SmsCauseSelect = document.getElementById('SmsCauseSelect');
-      var obvselect = document.getElementById('observationInput');
+      // var obvselect = document.getElementById('observationInput');
 
 
       // Hide all fields initially
@@ -645,7 +694,7 @@
       // Clear cause options
       causeSelect.innerHTML = '<option value="">--select</option>';
       SmsCauseSelect.innerHTML = '<option value="">--select</option>'; 
-      obvselect.innerHTML = '<option value="">--select</option>' ; 
+      // obvselect.innerHTML = '<option value="">--select</option>' ; 
 
 
 
@@ -773,20 +822,35 @@
 
                      ];
 
-        var observation_arr2 = [ 
+        // var observation_arr2 = [ 
 
-                          '烧焦的气味', 
-                          '跌倒了', 
-                          '噪音', 
-                          '着火', 
-                          '打开', 
-                          '异味', 
-                          '拉开',
-                          '吸烟', 
-                          '火花' 
+        //                   '烧焦的气味', 
+        //                   '跌倒了', 
+        //                   '噪音', 
+        //                   '着火', 
+        //                   '打开', 
+        //                   '异味', 
+        //                   '拉开',
+        //                   '吸烟', 
+        //                   '火花' 
 
-        ]; 
-        
+        // ];    
+
+
+        // var obervation_arr3 = [ 
+       
+        //             'Smell of something burning' , 
+        //             'Fell down',
+        //             'Noise',
+        //             'On fire' , 
+        //             'Open' , 
+        //             'Strange smell', 
+        //             'Pull open' , 
+        //             'Smoking' , 
+        //             'Spark'
+
+        // ];  
+
          var emergencyarr = [
  
                                   '老化' , 
@@ -892,23 +956,35 @@
 
       case "chinese": 
 
-                    obvselect.disabled = false ; 
+                    // obvselect.disabled = false; 
                     togglearrow9(); 
-                    observation_arr2.forEach(function (cause) {
-                    var option2 = document.createElement('option');
-                    option2.value = cause.toLowerCase().replace(/\s+/g, '_');
-                    option2.text = cause;
-                    obvselect.appendChild(option2);  
-                   });   
+                    // observation_arr2.forEach(function (cause) {
+                    // var option2 = document.createElement('option');
+                    // option2.value = cause.toLowerCase().replace(/\s+/g, '_');
+                    // option2.text = cause;
+                    // obvselect.appendChild(option2);  
+                  //  });   
 
              break;  
 
-        case "english": 
-                 obvselect.disabled = true;    
+        case "english":  
+
+                //  obvselect.disabled = false;     
+
                  togglearrow9(); 
+                 
+                //  obervation_arr3.forEach(function (cause) { 
+
+                //     var option3 = document.createElement('option'); 
+                //     option3.value = cause.toLowerCase().replace(/\s+/g, '_');
+                //     option3.text = cause;  
+                //     obvselect.appendChild(option3); 
+                 
+                //   }); 
+
                  let styleevent = document.getElementById("arr9"); 
                  styleevent.style.pointerEvents = "none"; 
-                 styleevent.style.color = "gray"; 
+                 styleevent.style.color = "blue"; 
 
              break; 
            
@@ -1017,267 +1093,99 @@
        }
     }
     
-    function showPreview()  {
-    var eventNumber = document.getElementById('eventNumberInput').value;
-    var smsType = document.getElementById('smsTypeSelect').value;
-    var cause = document.getElementById('causeSelect').value;
-    var Smscause = document.getElementById('SmsCauseSelect').value;
-    var customer = document.getElementById('customerInput').value;
-    var building = document.getElementById('buildingInput').value;
-    var offDateTime = document.getElementById('offDateTimeInput').value;
-    var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
-    var phase = document.getElementById('phaseSelect').value;
-    var repairingObservation = document.getElementById('repairObservationInput').value;
-    var observation = document.getElementById('observationInput').value;
-    var affectedNetwork = document.getElementById('affectedNetworkInput').value;
-    var generator = document.getElementById('generatorInput').value;
-    var powerLost = document.getElementById('powerLostInput').value;
-    var dateTime = document.getElementById('dateTimeInput').value;
-    var Address = document.getElementById('addressInput').value;
-    var Remarks = document.getElementById('RemarkInput').value;
-    var freetext =  document.getElementById('inptext').value;
+    function showPreview()  
+    { 
 
-    var previewContent = '</p>';
+        var smsType = document.getElementById('smsTypeSelect').value;
+        var cause = document.getElementById('causeSelect').value;
+        var Smscause = document.getElementById('SmsCauseSelect').value;
+        var customer = document.getElementById('customerInput').value;
+        var building = document.getElementById('buildingInput').value;
+        var offDateTime = document.getElementById('offDateTimeInput').value;
+        var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
+        var phase = document.getElementById('phaseSelect').value;
+        var repairingObservation = document.getElementById('repairObservationInput').value;
+        var observation = document.getElementById('observationInput').value;
+        var affectedNetwork = document.getElementById('affectedNetworkInput').value;
+        var generator = document.getElementById('generatorInput').value;
+        var powerLost = document.getElementById('powerLostInput').value;
+        var dateTime = document.getElementById('dateTimeInput').value;
+        var Address = document.getElementById('addressInput').value;
+        var Remarks = document.getElementById('RemarkInput').value;
+        var customer_r = document.getElementById('event_customer').innerText;  
 
-    const englishcontainerobj = {
-        o: "Outage",
-        e: "Emergency",
-        g: "Generator",
-        f: "Free Text"
-    };
+         
+        var previewContent = '</p>'; 
+  
+        if (smsType === 'outage') {
+          previewContent +=  smsType+':' + ' '+customer_r; 
+          // previewContent += '<p>Cause: ' + Smscause +'</p>';
+          previewContent += '<p>Reason: ' + cause + '</p>';
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';
 
-    const chinesecontainerobj = {
-        o: "停电",
-        e: "紧急情况",
-        g: "发电机",
-        f: "自由文本"
-    };
+        } else if (smsType === 'emergency') {
 
-    let selectedLanguage1 = document.getElementById("ls").value;
+          previewContent +=  smsType +':' + ' '+cause;   
 
-    function getNullOrValue(value) {
-        return value === "" ? "null" : value;
-    }
+        previewContent += '<p>Observation:' + ' ' + observation + '</p>';     
 
-    if (smsType === 'outage') {
-        switch (selectedLanguage1) {
-            case "english":
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + englishcontainerobj.o + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
+        let customer_value = document.getElementById('customerInput').value;
 
-            case "chinese":
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + chinesecontainerobj.o + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
+        if(customer_value === '0')
+        {
+             previewContent += '<p>Reason: ' + 'under investigation' + '</p>';
         }
-    }
-    else if (smsType === 'emergency') {
-        switch (selectedLanguage1) {
-            case "english":
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + englishcontainerobj.e + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
-
-            case "chinese":
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + chinesecontainerobj.e + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
+        else 
+        {
+             previewContent += '<p>Reason: ' + cause + '</p>';
         }
-    } 
 
-    else if (smsType === 'generator')
-    {
-              let mw = 'MW';      
-
-            switch(selectedLanguage1)
-            {
-
-                 case "english": 
+          previewContent += '<p>Customer: ' + customer + '</p>';
+          previewContent += '<p>Address: ' + Address + '</p>';  
 
 
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + englishcontainerobj.g + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-
-                       break;  
-
-                 case "chinese": 
-
-
-
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + chinesecontainerobj.g + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-
-                       break; 
-
-            }
-
-    }
-    else if(smsType === 'freetext')
-    {
-
-
-           switch(selectedLanguage1)
-            {
-
-                 case "english": 
-
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + englishcontainerobj.f + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+        } else if (smsType === 'generator') 
+        {
             
-                       break; 
-                 case "chinese": 
+                
+          let dateString = dateTime; 
+          let dateParts = dateString.split(" ")[0].split("-");  
+          let timeParts = dateString.split(" ")[1].split(":");  
 
-                previewContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                previewContent += '<p>smsType: ' + chinesecontainerobj.f + '</p>';
-                previewContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                previewContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                previewContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                previewContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                previewContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                previewContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                previewContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                previewContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                previewContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                previewContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                previewContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                previewContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                previewContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                previewContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                previewContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                previewContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+          let date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
 
-                     break; 
+          let formattedDate = date.getFullYear() + 
+                    ('0' + (date.getMonth() + 1)).slice(-2) + 
+                    ('0' + date.getDate()).slice(-2);
 
-            }
+          let formattedTime = ('0' + date.getHours()).slice(-2) + 
+                    ('0' + date.getMinutes()).slice(-2);
+
+          let formattedDateTime = formattedDate + " " + formattedTime;
+
+
+           previewContent += '<p>Date & Time: ' + formattedDateTime + '</p>';
+
+           previewContent += '<p>stop:' + generator + '</p>'; 
+             
+           previewContent += '<p>Emitted Power Lost:' + powerLost + '</p>'; 
+           previewContent += '<p>CEM Network Being Affected:' + ' ' + affectedNetwork +  '</p>'; 
+
+  
+           previewContent += '<p>Remarks: ' + Remarks + '</p>';  
+
+        }
+
+         document.getElementById('previewContent').innerHTML = previewContent;
+         document.getElementById('previewModal').style.display = 'block';
+       
     }
-                document.getElementById('previewContent').innerHTML = previewContent;
-                document.getElementById('previewModal').style.display = 'block'; 
-}
-
 
     function closeModal()  
     { 
         document.getElementById('previewModal').style.display = 'none'; 
     }
-
-    function cl2()
-    {
-        document.getElementById('saveModal').style.display = 'none';  
-    }
-
 
     function downloadFile() {
       var previewContent = document.getElementById('previewContent').innerText;
@@ -1292,9 +1200,10 @@
     }
 
 
-    function resetForm() {
-      document.getElementById("eventForm").reset();
-      document.getElementById("customerInput").value = 1;
+    function resetForm()  
+    { 
+          document.getElementById("eventForm").reset();
+          document.getElementById("customerInput").value = 1;
     }
 	
 
@@ -1392,63 +1301,153 @@ function simulateAPIResponse(input) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// Send notification API //////////////////////////////////////////////
 
+////////////////////////////////////////////// old code ///////////////////////////////////////////////////////////////////////  
 
-const smsContent = document.getElementById("smsRecipientBox");
+
+// const smsContent = document.getElementById("smsRecipientBox");
+// const recipient = document.getElementById("phoneNumberInput");
+// const sendBtn = document.getElementById("sendButton");
+
+// smsContent.addEventListener("input", checkForm);
+// recipient.addEventListener("input", checkForm);
+
+// function checkForm() {
+//     if (smsContent.value.trim() !== "" && recipient.value.trim() !== "") {
+//         sendBtn.disabled = false;
+//     } else {
+//         sendBtn.disabled = true;
+//     }
+// }
+
+// sendBtn.addEventListener("click", function () {
+//     const apiEndpoint = "https://uesbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
+//     const credentials = btoa("SMS_User:427fb94CBF086148D71C3A7B67DDD7FE04A2C09336FA34@FB3C050B51600B42!");
+
+//     const recipients = recipient.value.split(",").map(phone => phone.trim());
+//     if (!recipients.every(isValidPhoneNumber)) {
+//         alert("One or more phone numbers are invalid.");
+//         return;
+//     }
+
+//     const data = {
+//         content: smsContent.value,
+//         recipient: recipients,
+//     };
+
+//     console.log("Sending data:", data);
+
+//     fetch(apiEndpoint, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//             "Authorization": `Basic ${credentials}`,
+//         },
+//         body: JSON.stringify(data),
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`Failed to send SMS. HTTP status: ${response.status}`);
+//             }
+//             return response.json();
+//         })
+//         .then(result => {
+//             console.log("Server response:", result);
+//             if (result.success) {
+//                 alert("SMS Sent Successfully!");
+//             } else {
+//                 alert("Failed to send SMS: " + (result.message || "Unknown error"));
+//             }
+//         })
+//         .catch(error => {
+//             console.error("Error occurred:", error);
+//             alert("Error: " + error.message);
+//         });
+// });
+
+// function isValidPhoneNumber(number) {
+//     return /^\d{10}$/.test(number); 
+// }
+
+//////////////////////////////       new updated code   /////////////////////////////////////////////////////////////////
+
 const recipient = document.getElementById("phoneNumberInput");
 const sendBtn = document.getElementById("sendButton");
 
-
-smsContent.addEventListener("input", checkForm);
 recipient.addEventListener("input", checkForm);
 
-
 function checkForm() {
-    if (smsContent.value.trim() !== "" && recipient.value.trim() !== "") {
-        sendBtn.disabled = false;
-    } else {
-        sendBtn.disabled = true;
-    }
+    sendBtn.disabled = !recipient.value.trim();
 }
 
-sendBtn.addEventListener("click", function () {
-    const apiEndpoint = "https://uesbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";
+sendBtn.addEventListener("click", async function () { 
+  
+    const apiEndpoint = "https://uesbisvip.cem-macau.com:5501/rest/ISD/SMS/Send";   // backend end point 
+    const recipientValue = recipient.value.trim();
 
-    
-    const data = {
-        content: smsContent.value,
-        recipient: recipient.value.split(",").map(phone => phone.trim()) 
+    if (!isValidPhoneNumber(recipientValue)) {
+        alert("Phone number is invalid.");
+        return;
+    }
+
+    const phoneNumbers = recipientValue.split(',').map(num => num.trim()).join(',');
+
+    const payload = {
+        "ref_no": "",   
+        "phone_no": phoneNumbers,
+        "priority": "1",
+        "retry": "1",
+        "cost": "01",
+        "ca": "",  
+        "no_lines": "1",  
+        "line1": "test message",  
+        "line2": "",
+        "line3": "",
+        "line4": "",
+        "line5": "",
+        "line6": "",
+        "line7": "",
+        "line8": "",
+        "line9": "",
+        "line10": "",
+        "all_country": "0"  
     };
 
-    console.log("Sending data:", data); 
-  
-    fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-          
-            if (!response.ok) {
-                throw new Error(`Failed to send SMS. HTTP status: ${response.status}`);
-            }
-            return response.json(); 
-        })
-        .then(result => {
-            console.log("Server response:", result); 
-            if (result.success) {
-                alert("SMS Sent Successfully!");
-            } else {
-                alert("Failed to send SMS: " + (result.message || "Unknown error"));
-            }
-        })
-        .catch(error => {
-           
-            console.error("Error occurred:", error);
-            alert("Error: " + error.message);
+    const username = 'SMS_User';
+    const password = '427fb94CBF086148D71C3A7B67DDD7FE04A2C09336FA34@FB3C050B51600B42!';
+
+    const credentials = btoa(username + ':' + password);
+
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + credentials, 
+            },
+            body: JSON.stringify(payload)  
         });
+
+        if (!response.ok) {
+            throw new Error(`Failed to send SMS. HTTP status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Server response:", result);
+
+        if (result.status === "OK") {
+            alert("SMS Sent Successfully!");
+        } else {
+            alert("Failed to send SMS: " + (result.message || "Unknown error"));
+        }
+    } catch (error) {
+        console.error("Error occurred:", error);
+        alert("Error: " + error.message);
+    }
 });
+
+function isValidPhoneNumber(number) {
+    return /^\d{10}(,\d{10})*$/.test(number);  
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1458,6 +1457,7 @@ const Pageloadbydefault = () => {
 
 window.onload = function() {
     changeLang();   
+    restoreDate_time();  
 };
 
 }
@@ -1748,7 +1748,7 @@ function togglearrow9()
                mychinese(); 
                toggleFields(); 
                isChinese = true;  
-               DateconvertToChinese(); 
+               DateconvertToChinese();  
                togglearrow(); 
                togglearrow1(); 
                togglearrow3(); 
@@ -1797,10 +1797,12 @@ inputElements.forEach(id => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// power lost //////////////////////////////////////////////////////////////////////
 
+
+var powerLostInput = document.getElementById("powerLostInput");
+var mwLabel = document.getElementById("mwadd");
+
 function PowerLost() {
 
-    var powerLostInput = document.getElementById("powerLostInput");
-    var mwLabel = document.getElementById("mwadd");
     powerLostInput.addEventListener("change", function() {
       try {
         var selectedValue = powerLostInput.value; 
@@ -1814,8 +1816,11 @@ function PowerLost() {
            console.log(error); 
       }
     });
-  }
+  } 
+
 PowerLost();
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////Free text /////////////////////////////////////////////////////////
@@ -1996,141 +2001,293 @@ recepgroup.addEventListener("input", function () {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////// SAVE //////////////////////////////////////////////////////////////////////////////
 
+
 function saveBtn() { 
 
 
-    var eventNumber = document.getElementById('eventNumberInput').value;
-    var smsType = document.getElementById('smsTypeSelect').value;
-    var cause = document.getElementById('causeSelect').value;
-    var Smscause = document.getElementById('SmsCauseSelect').value;
-    var customer = document.getElementById('customerInput').value;
-    var building = document.getElementById('buildingInput').value;
-    var offDateTime = document.getElementById('offDateTimeInput').value;
-    var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
-    var phase = document.getElementById('phaseSelect').value;
-    var repairingObservation = document.getElementById('repairObservationInput').value;
-    var observation = document.getElementById('observationInput').value;
-    var affectedNetwork = document.getElementById('affectedNetworkInput').value;
-    var generator = document.getElementById('generatorInput').value;
-    var powerLost = document.getElementById('powerLostInput').value;
-    var dateTime = document.getElementById('dateTimeInput').value;
-    var Address = document.getElementById('addressInput').value;
-    var Remarks = document.getElementById('RemarkInput').value;
-    var freetext = document.getElementById('inptext').value;
+var eventNumber = document.getElementById('eventNumberInput').value;
+var smsType = document.getElementById('smsTypeSelect').value;
+var cause = document.getElementById('causeSelect').value;
+var Smscause = document.getElementById('SmsCauseSelect').value;
+var customer = document.getElementById('customerInput').value;
+var building = document.getElementById('buildingInput').value;
+var offDateTime = document.getElementById('offDateTimeInput').value;
+var restoreDateTime = document.getElementById('restoreDateTimeInput').value;
+var phase = document.getElementById('phaseSelect').value;
+var repairingObservation = document.getElementById('repairObservationInput').value;
+var observation = document.getElementById('observationInput').value;
+var affectedNetwork = document.getElementById('affectedNetworkInput').value;
+var generator = document.getElementById('generatorInput').value;
+var powerLost = document.getElementById('powerLostInput').value;
+var dateTime = document.getElementById('dateTimeInput').value;
+var Address = document.getElementById('addressInput').value;
+var Remarks = document.getElementById('RemarkInput').value;
+var freetext = document.getElementById('inptext').value;
 
-    var saveContent = '</p>';
+var saveContent = '</p>';
 
-    const englishcontainerobj = {
-        o: "Outage",
-        e: "Emergency",
-        g: "Generator",
-        f: "Free Text"
-    };
+const englishcontainerobj1 = {
+  
+    o: "Outage",
+    e: "Emergency",
+    g: "Generator",
+    f: "Free Text"
+};
 
-    const chinesecontainerobj = {
-        o: "停电",
-        e: "紧急情况",
-        g: "发电机",
-        f: "自由文本"
-    };
+const chinesecontainerobj1 = {
+    o: "停电",
+    e: "紧急情况",
+    g: "发电机",
+    f: "自由文本"
+};
 
-    let slci = document.getElementById("ls").value;
+let slci = document.getElementById("ls").value;
 
-    function getNullOrValue(value) {
-        return value === "" ? "null" : value;
+function getNullOrValue(value) 
+{
+    return value === "" ? "null" : value;
+}
+
+
+if (smsType === 'outage') {
+    switch (slci) {
+        case "english":
+            saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+            saveContent += '<p>smsType: ' + englishcontainerobj1.o + '</p>';
+            saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+            saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+            saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+            saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+            saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+            saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+            saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+            saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+            saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+            saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+            saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+            saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+            saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+            saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+            saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+            saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';    
+
+            break;
+
+        case "chinese":
+            saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+            saveContent += '<p>smsType: ' + chinesecontainerobj1.o + '</p>';
+            saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+            saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+            saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+            saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+            saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+            saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+            saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+            saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+            saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+            saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+            saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+            saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+            saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+            saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+            saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+            saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+            break;
+    }
+} else if (smsType === 'emergency') {
+    switch (slci) {
+        case "english":
+            saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+            saveContent += '<p>smsType: ' + englishcontainerobj1.e + '</p>';
+            saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+            saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+            saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+            saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+            saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+            saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+            saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+            saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+            saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+            saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+            saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+            saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+            saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+            saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+            saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+            saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+            break;
+
+        case "chinese":
+            saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+            saveContent += '<p>smsType: ' + chinesecontainerobj1.e + '</p>';
+            saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+            saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+            saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+            saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+            saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+            saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+            saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+            saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+            saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+            saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+            saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+            saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+            saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+            saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+            saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+            saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+            break;
+    }
+}   
+
+else if (smsType === 'generator')
+{
+          let mw = 'MW';      
+
+        switch(slci)
+        {
+
+             case "english": 
+
+
+             saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+             saveContent += '<p>smsType: ' + englishcontainerobj1.g + '</p>';
+             saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+             saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+             saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+             saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+             saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+             saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+             saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+             saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+             saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+             saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+             saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+             saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
+             saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+             saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+             saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+             saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+
+                   break;  
+
+             case "chinese": 
+
+
+
+             saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+             saveContent += '<p>smsType: ' + chinesecontainerobj1.g + '</p>';
+             saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+             saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+             saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+             saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+             saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+             saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+             saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+             saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+             saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+             saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+             saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+             saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + ' ' + mw + '</p>';
+             saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+             saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+             saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+             saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+                   break; 
+
+        }
+
+}
+
+
+else if(smsType === 'freetext')
+{
+
+       switch(slci)
+        {
+
+             case "english": 
+
+             saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+             saveContent += '<p>smsType: ' + englishcontainerobj1.f + '</p>';
+             saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+             saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+             saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+             saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+             saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+             saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+             saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+             saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+             saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+             saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+             saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+             saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+             saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+             saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+             saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+             saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+        
+                   break; 
+             case "chinese": 
+
+             saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
+             saveContent += '<p>smsType: ' + chinesecontainerobj1.f + '</p>';
+             saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
+             saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
+             saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
+             saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
+             saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
+             saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
+             saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
+             saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
+             saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
+             saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
+             saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
+             saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
+             saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
+             saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
+             saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
+             saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
+
+                 break; 
+
+        }
+}
+         document.getElementById('saveContent').innerHTML = saveContent;
+         document.getElementById('saveModal').style.display = 'block';  
+}
+function cl2()
+{
+    document.getElementById('saveModal').style.display = 'none';  
+}   
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////// Restore date and time //////////////////////////////////////
+
+
+function restoreDate_time() {
+
+    var restoreDateInput = document.getElementById("restoreDateTimeInput"); 
+    var repairCheckbox = document.getElementById("repaircheckbox");
+    var restoreDateTimeField = document.getElementById("restoreDateTimeField");
+
+    if (restoreDateInput.value !== "") {
+    
+        restoreDateInput.value = restoreDateInput.value;
+        repairCheckbox.checked = false;
+    } else {
+     
+        repairCheckbox.value = "";
+
+        repairCheckbox.checked = true;
     }
 
-    if (smsType === 'outage') {
-        switch (slci) {
-            case "english":
-                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                saveContent += '<p>smsType: ' + englishcontainerobj.o + '</p>';
-                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
-
-            case "chinese":
-                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                saveContent += '<p>smsType: ' + chinesecontainerobj.o + '</p>';
-                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
-        }
-    } else if (smsType === 'emergency') {
-        switch (slci) {
-            case "english":
-                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                saveContent += '<p>smsType: ' + englishcontainerobj.e + '</p>';
-                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
-
-            case "chinese":
-                saveContent += '<p>Event Number: ' + getNullOrValue(eventNumber) + '</p>';
-                saveContent += '<p>smsType: ' + chinesecontainerobj.e + '</p>';
-                saveContent += '<p>Cause: ' + getNullOrValue(Smscause) + '</p>';
-                saveContent += '<p>Reason: ' + getNullOrValue(cause) + '</p>';
-                saveContent += '<p>Customer: ' + getNullOrValue(customer) + '</p>';
-                saveContent += '<p>Address: ' + getNullOrValue(Address) + '</p>';
-                saveContent += '<p>Building: ' + getNullOrValue(building) + '</p>';
-                saveContent += '<p>Off Date Time: ' + getNullOrValue(offDateTime) + '</p>';
-                saveContent += '<p>Restore Date Time: ' + getNullOrValue(restoreDateTime) + '</p>';
-                saveContent += '<p>Repairing Observation: ' + getNullOrValue(repairingObservation) + '</p>';
-                saveContent += '<p>Observation: ' + getNullOrValue(observation) + '</p>';
-                saveContent += '<p>Affected Network: ' + getNullOrValue(affectedNetwork) + '</p>';
-                saveContent += '<p>Generator: ' + getNullOrValue(generator) + '</p>';
-                saveContent += '<p>Power Lost: ' + getNullOrValue(powerLost) + '</p>';
-                saveContent += '<p>Date and Time: ' + getNullOrValue(dateTime) + '</p>';
-                saveContent += '<p>Phase: ' + getNullOrValue(phase) + '</p>';
-                saveContent += '<p>Remarks: ' + getNullOrValue(Remarks) + '</p>';
-                saveContent += '<p>Free Text: ' + getNullOrValue(freetext) + '</p>';
-                break;
-        }
-    }      
-             document.getElementById('saveContent').innerHTML = saveContent;
-             document.getElementById('saveModal').style.display = 'block';  
+    if (repairCheckbox.checked) {
+        restoreDateTimeField.classList.remove("hidden");  
+    } else {
+        restoreDateTimeField.classList.add("hidden");  
+    }
 }
 
 </script>
