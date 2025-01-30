@@ -211,7 +211,7 @@
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:12rem; color:rgb(51,153,255);" id="arr4" onclick="togglearrow4()">▼</h6>
                         <select class="form-control" id="phaseSelect">
                           <option value="">--select</option>
-                          <option value="A" id="phase_a">A</option>
+                          <option value="A" id="phase_a" selected>A</option>
                           <option value="B" id="phase_b">B</option>
                           <option value="C" id="phase_c">C</option>
                           <option value="AB" id="phase_ab">AB</option>
@@ -325,8 +325,8 @@
                         <label for="generatorInput">Generator:</label>
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr5" onclick="togglearrow5()">▼</h6>
                         <select class="form-control" id="generatorInput">
-                          <option value="" selected>--select</option>
-                          <option value="G03">G03</option>
+                          <option value="">--select</option>
+                          <option value="G03" selected>G03</option>
                           <option value="G04">G04</option>
                           <option value="G05">G05</option>
                           <option value="G06">G06</option>
@@ -353,8 +353,8 @@
                         <!-- <input type="text" class="form-control" id="powerLostInput" placeholder="Power Lost"> -->
                         <h6 style="color: black; position: absolute; margin-top:3.5px; margin-left:26rem; color:rgb(51,153,255);" id="arr7" onclick="togglearrow7()">▼</h6>
                         <select class="form-control" id="powerLostInput">
-                          <option value="" selected disabled>--select</option>
-                          <option value="0" id="y">0</option>
+                          <option value="">--select</option>
+                          <option value="0" id="y" selected>0</option>
                           <option value="10" id="y">10</option>
                           <option value="12" id="y">12</option>
                           <option value="126" id="y">126</option>
@@ -697,7 +697,6 @@
       // obvselect.innerHTML = '<option value="">--select</option>' ; 
 
 
-
       if (smsType === 'outage') {
         var causes = ['Aging', 'Bad Contact', 'Burnt', 'Cancel Job', 'Damaged', 'Disconnection Non-payment', 'Fell Down', 'Fire Accident', 'Flooded', 'Fuse Blown', 'Fuse Base Burnt', 'Internal Fault', 'Loose'];
         var causeout = ['110kV Cable', '11kV Tr', '220kV Cable', '66kV Cable', '66kV/11kV Tr', 'Aerial Cable', 'CCL', 'CD', 'Customer', 'Customer CCL', 'LV Cable', 'MV Cable', 'Meter', 'Meter Wire Box', 'PH', 'QG', 'QGBT', 'RMU CB Open', 'Customer CCL Fuse Base', 'Under Investigation', 'Urgent Planned Outage'];
@@ -748,7 +747,12 @@
               }); 
 
 
-                   break; 
+                 if(causeSelect.options.length > 1)
+                 { 
+                     causeSelect.selectedIndex = 1;  
+                 } 
+
+                    break; 
 
           case "english": 
        
@@ -758,16 +762,19 @@
                option1.text = cause;
                causeSelect.appendChild(option1); 
                 
-
               });
   
-                   break; 
+               if(causeSelect.options.length > 1) 
+               {
+                   causeSelect.selectedIndex = 1 ; 
+               }
+
+                    break; 
 
           }
 
 
-         let selectedLanguage = document.getElementById("ls").value;    
-
+         let selectedLanguage = document.getElementById("ls").value;     
        
         switch(selectedLanguage)
         {
@@ -779,7 +786,11 @@
                         option1.value = cause.toLowerCase().replace(/\s+/g, '_');
                         option1.text = cause;
                        SmsCauseSelect.appendChild(option1);   
-              });
+              }); 
+                 
+                    if (SmsCauseSelect.options.length > 1) {
+                            SmsCauseSelect.selectedIndex = 1; 
+                   }
                           break; 
 
               case "chinese":  
@@ -790,9 +801,12 @@
               option2.text = cause;
               SmsCauseSelect.appendChild(option2);  
                   
-              });  
-                    
-                          break;  
+              });    
+       
+                   if (SmsCauseSelect.options.length > 1) {
+                            SmsCauseSelect.selectedIndex = 1; 
+                   }
+                           break;         
 
         }
 
@@ -897,8 +911,14 @@
              var option1 = document.createElement('option');
              option1.value = cause.toLowerCase().replace(/\s+/g, '_');
              option1.text = cause;
-             SmsCauseSelect.appendChild(option1);
+             SmsCauseSelect.appendChild(option1);  
+
         });
+                 
+          if(SmsCauseSelect.options.length > 1)
+           {
+               SmsCauseSelect.selectedIndex = 1; 
+           }
 
                        break; 
 
@@ -911,6 +931,11 @@
              SmsCauseSelect.appendChild(option2);
 
              }); 
+
+             if(SmsCauseSelect.options.length > 1)
+             {
+                  SmsCauseSelect.selectedIndex = 1; 
+            }
 
                       break; 
         }
@@ -930,8 +955,14 @@
           var option1 = document.createElement('option');
           option1.value = cause.toLowerCase().replace(/\s+/g, '_');
           option1.text = cause;
-          causeSelect.appendChild(option1);
-        });
+          causeSelect.appendChild(option1); 
+
+        }); 
+
+             if(causeSelect.options.length > 1)
+             {
+                 causeSelect.selectedIndex = 1; 
+             }
        
                break; 
       
@@ -941,9 +972,15 @@
           var option2 = document.createElement('option');
           option2.value = cause.toLowerCase().replace(/\s+/g, '_');
           option2.text = cause;
-          causeSelect.appendChild(option2);
-        });
+          causeSelect.appendChild(option2); 
 
+        }); 
+        
+             if(causeSelect.options.length > 1)
+             {
+                 causeSelect.selectedIndex = 1; 
+             }
+       
                break; 
 
      }
@@ -1035,8 +1072,14 @@
              option1.value = cause.toLowerCase().replace(/\s+/g, '_');
              option1.text = cause;
              SmsCauseSelect.appendChild(option1);
-        });
-        
+
+        }); 
+ 
+               if(SmsCauseSelect.options.length > 1)
+               {
+                    SmsCauseSelect.selectedIndex = 1; 
+               }
+
                      break; 
 
             case "chinese": 
@@ -1048,6 +1091,11 @@
              SmsCauseSelect.appendChild(option2);
 
              });
+                
+               if(SmsCauseSelect.options.length > 1)
+               {
+                    SmsCauseSelect.selectedIndex = 1; 
+               }
               
                    break; 
  
@@ -1117,16 +1165,56 @@
          
         var previewContent = '</p>'; 
   
-        if (smsType === 'outage') {
+        if (smsType === 'outage') { 
+
+        
+          let dateString = dateTime; 
+          let dateParts = dateString.split(" ")[0].split("-");  
+          let timeParts = dateString.split(" ")[1].split(":");  
+
+          let date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
+
+          let formattedDate = date.getFullYear() + 
+                    ('0' + (date.getMonth() + 1)).slice(-2) + 
+                    ('0' + date.getDate()).slice(-2);
+
+          let formattedTime = ('0' + date.getHours()).slice(-2) + 
+                    ('0' + date.getMinutes()).slice(-2);
+
+          let formattedDateTime = formattedDate + " " + formattedTime;
+
+
+
+
+          previewContent +=  '<br>'+ formattedDateTime+''+'</br>';
           previewContent +=  smsType+':' + ' '+customer_r; 
-          // previewContent += '<p>Cause: ' + Smscause +'</p>';
           previewContent += '<p>Reason: ' + cause + '</p>';
           previewContent += '<p>Customer: ' + customer + '</p>';
           previewContent += '<p>Address: ' + Address + '</p>';
 
         } else if (smsType === 'emergency') {
 
-          previewContent +=  smsType +':' + ' '+cause;   
+
+          let dateString = dateTime; 
+          let dateParts = dateString.split(" ")[0].split("-");  
+          let timeParts = dateString.split(" ")[1].split(":");  
+
+          let date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
+
+          let formattedDate = date.getFullYear() + 
+                    ('0' + (date.getMonth() + 1)).slice(-2) + 
+                    ('0' + date.getDate()).slice(-2);
+
+          let formattedTime = ('0' + date.getHours()).slice(-2) + 
+                    ('0' + date.getMinutes()).slice(-2);
+
+          let formattedDateTime = formattedDate + " " + formattedTime;
+
+
+      
+        previewContent +=  '<br>'+ formattedDateTime+''+'</br>';
+
+        previewContent +=  smsType +':' + ' '+cause;   
 
         previewContent += '<p>Observation:' + ' ' + observation + '</p>';     
 
@@ -1165,6 +1253,7 @@
           let formattedDateTime = formattedDate + " " + formattedTime;
 
 
+
            previewContent += '<p>Date & Time: ' + formattedDateTime + '</p>';
 
            previewContent += '<p>stop:' + generator + '</p>'; 
@@ -1176,6 +1265,7 @@
            previewContent += '<p>Remarks: ' + Remarks + '</p>';  
 
         }
+
 
          document.getElementById('previewContent').innerHTML = previewContent;
          document.getElementById('previewModal').style.display = 'block';
@@ -1807,10 +1897,11 @@ function PowerLost() {
       try {
         var selectedValue = powerLostInput.value; 
         if (selectedValue) { 
-          mwLabel.textContent = selectedValue + " MW"; 
+          mwLabel.textContent = selectedValue +" "+"MW"; 
           mwLabel.style.marginTop = "-30px"; 
           mwLabel.style.marginLeft = "14.2px";   
           mwLabel.style.fontSize = "13px";  
+          
         } 
       } catch (error) {
            console.log(error); 
@@ -1943,21 +2034,21 @@ phoneNumberInput.addEventListener("input", function () {
 });
 
 
-recepgroup.addEventListener("input", function () { 
+// recepgroup.addEventListener("input", function () { 
 
            
-      if(recepgroup.value)
-      {
-        phoneNumberInput.disabled = true;  
-        outputDiv.style.display = "none" ; 
-      }
-      else 
-      {
-        phoneNumberInput.disabled = false; 
-        outputDiv.style.display = "block";  
-      }
+//       if(recepgroup.value)
+//       {
+//         phoneNumberInput.disabled = true;  
+//         outputDiv.style.display = "none" ; 
+//       }
+//       else 
+//       {
+//         phoneNumberInput.disabled = false; 
+//         outputDiv.style.display = "block";  
+//       }
 
-}); 
+// }); 
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// Validation ////////////////////////////////////////////////
@@ -2289,6 +2380,7 @@ function restoreDate_time() {
         restoreDateTimeField.classList.add("hidden");  
     }
 }
+
 
 </script>
 </body>
