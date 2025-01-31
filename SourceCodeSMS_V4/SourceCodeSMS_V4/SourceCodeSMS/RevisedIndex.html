@@ -555,10 +555,6 @@
 
     }
 		
-		function padToTwoDigits(number){
-			return number.toString().padStart(2, '0');
-		}
-		
 		function formatDateTime(dateString){
 			var date = new Date(dateString);
 			var year = date.getFullYear();
@@ -568,6 +564,10 @@
 			var minutes = padToTwoDigits(date.getMinutes());
 			var seconds = padToTwoDigits(date.getSeconds());
 			return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+		}
+
+    function padToTwoDigits(number){
+			return number.toString().padStart(2, '0');
 		}
 		
 		function fetchOutageStepOffTime(jobId) {
@@ -1168,25 +1168,7 @@
         if (smsType === 'outage') { 
 
         
-          let dateString = dateTime; 
-          let dateParts = dateString.split(" ")[0].split("-");  
-          let timeParts = dateString.split(" ")[1].split(":");  
-
-          let date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
-
-          let formattedDate = date.getFullYear() + 
-                    ('0' + (date.getMonth() + 1)).slice(-2) + 
-                    ('0' + date.getDate()).slice(-2);
-
-          let formattedTime = ('0' + date.getHours()).slice(-2) + 
-                    ('0' + date.getMinutes()).slice(-2);
-
-          let formattedDateTime = formattedDate + " " + formattedTime;
-
-
-
-
-          previewContent +=  '<br>'+ formattedDateTime+''+'</br>';
+          previewContent +=  '<br>' + {formattedOffTime} +''+'To'+'</br>'; 
           previewContent +=  smsType+':' + ' '+customer_r; 
           previewContent += '<p>Reason: ' + cause + '</p>';
           previewContent += '<p>Customer: ' + customer + '</p>';
@@ -1195,24 +1177,7 @@
         } else if (smsType === 'emergency') {
 
 
-          let dateString = dateTime; 
-          let dateParts = dateString.split(" ")[0].split("-");  
-          let timeParts = dateString.split(" ")[1].split(":");  
-
-          let date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]);
-
-          let formattedDate = date.getFullYear() + 
-                    ('0' + (date.getMonth() + 1)).slice(-2) + 
-                    ('0' + date.getDate()).slice(-2);
-
-          let formattedTime = ('0' + date.getHours()).slice(-2) + 
-                    ('0' + date.getMinutes()).slice(-2);
-
-          let formattedDateTime = formattedDate + " " + formattedTime;
-
-
-      
-        previewContent +=  '<br>'+ formattedDateTime+''+'</br>';
+        previewContent +=  '<br>' + {formattedOffTime} +''+'To'+'</br>'; 
 
         previewContent +=  smsType +':' + ' '+cause;   
 
